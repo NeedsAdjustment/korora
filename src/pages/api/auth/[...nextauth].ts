@@ -8,7 +8,7 @@ export default NextAuth({
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        firstname: { label: 'First Name', type: 'text', placeholder: 'Amélie' },
+        firstName: { label: 'First Name', type: 'text', placeholder: 'Amélie' },
         lastName: { label: 'Last Name', type: 'text', placeholder: 'LaCroix' },
         password: { label: 'Password', type: 'password' },
       },
@@ -16,7 +16,7 @@ export default NextAuth({
         const creds = await loginSchema.parseAsync(credentials)
 
         const user = await prisma.user.findFirst({
-          where: { firstname: creds.firstname } && { lastname: creds.lastname },
+          where: { firstName: creds.firstName } && { lastName: creds.lastName },
         })
         if (!user) {
           return null
@@ -28,7 +28,7 @@ export default NextAuth({
 
         return {
           id: user.id,
-          name: user.firstname + ' ' + user.lastname,
+          name: user.firstName + ' ' + user.lastName,
         }
       },
     }),
@@ -46,7 +46,7 @@ export default NextAuth({
     jwt: async ({ token, user }) => {
       if (user) {
         token.id = user.id
-        token.name = user.firstname + ' ' + user.lastname
+        token.name = user.firstName + ' ' + user.lastName
       }
       return token
     },

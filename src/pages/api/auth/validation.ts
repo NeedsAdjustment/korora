@@ -1,7 +1,7 @@
 import * as z from 'zod'
 export const loginSchema = z.object({
-  firstname: z.string(),
-  lastname: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
   password: z.string(),
 })
 export type ILogin = z.infer<typeof loginSchema>

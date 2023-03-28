@@ -34,16 +34,16 @@ const Home: NextPage = () => {
             <div className="card-body">
               <h2 className="card-title">Welcome back!</h2>
               <input
-                type="firstname"
-                placeholder="Type your firstname..."
+                type="firstName"
+                placeholder="Type your firstName..."
                 className="input input-bordered w-full max-w-xs mt-2"
-                {...register("firstname")}
+                {...register("firstName")}
               />
               <input
-                type="lastname"
-                placeholder="Type your lastname..."
+                type="lastName"
+                placeholder="Type your lastName..."
                 className="input input-bordered w-full max-w-xs mt-2"
-                {...register("lastname")}
+                {...register("lastName")}
               />
               <input
                 type="password"
