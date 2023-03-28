@@ -8,10 +8,12 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  firstname String
-  lastname  String
-  password  String   @default("REDACTED")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int      @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  bridalParty Boolean  @default(false)
+  nzInvite    Boolean  @default(false)
+  myInvite    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

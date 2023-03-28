@@ -22,7 +22,7 @@ export default NextAuth({
           return null
         }
 
-        if (user.password !== creds.password) {
+        if (process.env.PASSWORD !== creds.password) {
           return Promise.resolve(null)
         }
 
@@ -59,4 +59,3 @@ export default NextAuth({
     },
   },
 })
-
