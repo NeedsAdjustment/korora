@@ -41,24 +41,22 @@ export default NextAuth({
     strategy: 'jwt',
   },
   jwt: {
-    maxAge: 15 * 24 * 30 * 60,
+    maxAge: 15 * 24 * 60 * 60, // 15 days
   },
   pages: {
     signIn: '/',
   },
   callbacks: {
-    jwt: async ({ token, user }) => {
+    async jwt({ token, user }) {
       if (user) {
-        token.id = user.id
         token.name = user.firstName + ' ' + user.lastName
       }
       return token
     },
-    session: async ({ session, token }) => {
+    async session({ session, token }) {
       if (token) {
-        session.id = token.id
+        session.id = token.name
       }
-
       return session
     },
   },
