@@ -15,8 +15,13 @@ export default NextAuth({
       authorize: async (credentials) => {
         const creds = await loginSchema.parseAsync(credentials)
 
-        const user = await prisma.user.findFirst({
-          where: { firstName: creds.firstName } && { lastName: creds.lastName },
+        const user = await prisma.user.findUnique({
+          where: {
+            fullName: {
+              firstName: creds.firstName,
+              lastName: creds.lastName,
+            },
+          },
         })
         if (!user) {
           return null
@@ -27,7 +32,6 @@ export default NextAuth({
         }
 
         return {
-          id: user.id,
           name: user.firstName + ' ' + user.lastName,
         }
       },
