@@ -67,7 +67,7 @@ const Home: NextPage = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex items-center justify-center flex-col w-full lg:space-x-10 lg:flex-row" >
               <Image priority style={{ display: 'flex', width: '13em' }} src={Penguins} alt='Penguins' />
-              <div className='flex flex-col justify-center mt-6'>
+              <div className='flex flex-col justify-center mt-6 lg:mt-0'>
                 <h1 className="card-title font-heading font-medium tracking-wider text-7xl lg:text-8xl text-neutral whitespace-pre">Emily<span className='font-light'>&</span></h1>
                 <h1 className="card-title font-heading font-medium tracking-wide text-7xl lg:text-8xl text-neutral whitespace-pre ml-5">Joshua</h1>
               </div>
