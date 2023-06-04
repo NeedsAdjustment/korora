@@ -14,7 +14,6 @@ export default NextAuth({
       },
       authorize: async (credentials) => {
         const creds = await loginSchema.parseAsync(credentials)
-
         const user = await prisma.user.findUnique({
           where: {
             fullName: {
