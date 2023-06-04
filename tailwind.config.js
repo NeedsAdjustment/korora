@@ -2,6 +2,9 @@
 module.exports = {
   content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    screens: {
+      lg: '1200px',
+    },
     extend: {
       fontFamily: {
         heading: ['var(--font-ogg)'],
@@ -17,9 +20,10 @@ module.exports = {
         green: {
           primary: '#D1C1D7',
           secondary: '#F6CBD1',
-          accent: '#B4E9D6',
+          accent: '#89eda9',
           neutral: '#fff',
           'base-100': '#31553d',
+
           info: '#3ABFF8',
           success: '#36D399',
           warning: '#FBBD23',
