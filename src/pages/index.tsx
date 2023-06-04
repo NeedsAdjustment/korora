@@ -10,7 +10,7 @@ import { loginSchema, ILogin } from "./api/auth/validation"
 
 
 const Home: NextPage = () => {
-  const { register, handleSubmit } = useForm<ILogin>({
+  const { register, handleSubmit, setFocus } = useForm<ILogin>({
     resolver: zodResolver(loginSchema),
   })
   const [wrong, setWrong] = useState(false)
@@ -29,11 +29,10 @@ const Home: NextPage = () => {
     setLoading(false)
   }, [])
 
-  let lastName = useRef<HTMLInputElement>(null)
   const handleNameTransition = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === ' ') {
       e.preventDefault()
-      lastName.current.focus()
+      setFocus('lastName')
     }
   }
   return (
@@ -59,7 +58,7 @@ const Home: NextPage = () => {
                       <span className="label-text">First Name</span>
                     </label>
                     <input
-                      type="firstName"
+                      type="text"
                       placeholder="Amelié"
                       className="input input-bordered w-full max-w-xs"
                       onKeyDown={handleNameTransition}
@@ -71,11 +70,10 @@ const Home: NextPage = () => {
                       <span className="label-text">Last Name</span>
                     </label>
                     <input
-                      type="lastName"
+                      type="text"
                       placeholder="Lacroix"
                       className="input join-item input-bordered w-full max-w-xs"
                       {...register("lastName")}
-                      ref={lastName}
                     />
                   </div>
                 </div>
