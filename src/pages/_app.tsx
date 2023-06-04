@@ -1,6 +1,7 @@
 import '@/styles/globals.css'
 import localFont from 'next/font/local'
 import type { AppProps } from 'next/app'
+import { SessionProvider } from 'next-auth/react'
 
 const ogg = localFont({
   src: [
@@ -190,8 +191,10 @@ const styreneB = localFont({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <main className={`${ogg.variable} ${styreneA.variable} ${styreneB.variable}`}>
-      <Component {...pageProps} />
-    </main>
+    <SessionProvider session={pageProps.session}>
+      <main className={`${ogg.variable} ${styreneA.variable} ${styreneB.variable}`}>
+        <Component {...pageProps} />
+      </main>
+    </SessionProvider>
   )
 }
