@@ -1,11 +1,7 @@
-import { NextPage } from "next"
+import { NextPage } from 'next'
 
 const Dashboard: NextPage = () => {
-  return (
-    <div>
-      Hi
-    </div>
-  )
+  return <div>Hi</div>
 }
 
 export default Dashboard

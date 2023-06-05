@@ -2,6 +2,7 @@ import '@/styles/globals.css'
 import localFont from 'next/font/local'
 import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
+import Head from 'next/head'
 
 const ogg = localFont({
   src: [
@@ -54,9 +55,9 @@ const ogg = localFont({
       path: '../../public/fonts/Ogg Thin Italic.ttf',
       weight: '100',
       style: 'italic',
-    }
+    },
   ],
-  variable: '--font-ogg'
+  variable: '--font-ogg',
 })
 
 const styreneA = localFont({
@@ -119,9 +120,9 @@ const styreneA = localFont({
       path: '../../public/fonts/StyreneALC-ThinItalic.otf',
       weight: '100',
       style: 'italic',
-    }
+    },
   ],
-  variable: '--font-styrene-a'
+  variable: '--font-styrene-a',
 })
 
 const styreneB = localFont({
@@ -184,15 +185,27 @@ const styreneB = localFont({
       path: '../../public/fonts/StyreneBLC-ThinItalic.otf',
       weight: '100',
       style: 'italic',
-    }
+    },
   ],
-  variable: '--font-styrene-b'
+  variable: '--font-styrene-b',
 })
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       <main className={`${ogg.variable} ${styreneA.variable} ${styreneB.variable}`}>
+        <Head>
+          <title>Emily & Joshua</title>
+          <meta name='description' content='Our Wedding' />
+          <meta name='viewport' content='width=device-width, initial-scale=1' />
+          <link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png' />
+          <link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png' />
+          <link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png' />
+          <link rel='manifest' href='/site.webmanifest' />
+          <link rel='mask-icon' href='/safari-pinned-tab.svg' color='#31553d' />
+          <meta name='msapplication-TileColor' content='#603cba' />
+          <meta name='theme-color' content='#31553d' />
+        </Head>
         <Component {...pageProps} />
       </main>
     </SessionProvider>
