@@ -53,7 +53,7 @@ const Home: NextPage = () => {
     return (
       <div data-theme='green'>
         <main className='flex items-center justify-center h-[calc(100dvh)] font-body tracking-wide min-w-[360px] min-h-[750px] px-8 my-8 lg:my-0'>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(onSubmit)} autoComplete='false'>
             <div className='flex items-center justify-center flex-col w-full lg:space-x-10 lg:flex-row'>
               <Image priority style={{ display: 'flex', width: '13em' }} src={Penguins} alt='Penguins' />
               <div className='flex flex-col justify-center mt-6 lg:mt-0'>
@@ -65,15 +65,17 @@ const Home: NextPage = () => {
               <div className='divider invisible lg:visible lg:divider-horizontal'></div>
               <div className='grid max-w-96 card  text-base-100 bg-neutral'>
                 <div className='card-body'>
-                  <h1 className='card-title justify-center font-display font-light text-4xl mb-6'>Welcome</h1>
+                  <h1 className='card-title justify-center font-display font-light text-5xl mb-6'>Welcome</h1>
                   <div className='form-control w-full max-w-xs'>
                     <div className='join'>
                       <div className='join-item'>
                         <label className='label'>
-                          <span className='label-text text-base-100'>First Name</span>
+                          <span className='label-text text-base-100 font-light'>First Name</span>
                         </label>
                         <input
                           type='text'
+                          autoComplete='off'
+                          aria-autocomplete='none'
                           placeholder='Amelié'
                           className='input w-full max-w-xs text-neutral placeholder-accent'
                           onKeyDown={handleChange}
@@ -82,10 +84,12 @@ const Home: NextPage = () => {
                       </div>
                       <div className='join-item'>
                         <label className='label ml-3'>
-                          <span className='label-text text-base-100'>Last Name</span>
+                          <span className='label-text text-base-100 font-light'>Last Name</span>
                         </label>
                         <input
                           type='text'
+                          autoComplete='off'
+                          aria-autocomplete='none'
                           placeholder='Lacroix'
                           className='input join-item w-full max-w-xs text-neutral placeholder-accent mr-3'
                           onKeyDown={handleChange}
@@ -93,8 +97,8 @@ const Home: NextPage = () => {
                         />
                       </div>
                     </div>
-                    <label className='label'>
-                      <span className='label-text text-base-100'>Password</span>
+                    <label className='label mt-1'>
+                      <span className='label-text text-base-100 font-light'>Password</span>
                     </label>
                     <input
                       type='password'
@@ -103,12 +107,12 @@ const Home: NextPage = () => {
                       {...register('password')}
                     />
                   </div>
-                  <button className='btn btn-secondary mt-2 font-display font-normal' type='submit' onClick={() => setWrong(false)}>
+                  <button className='btn btn-secondary mt-2 font-display font-bold tracking-wider' type='submit' onClick={() => setWrong(false)}>
                     {(loading && <span className='loading loading-infinity loading-sm'></span>) || 'Login'}
                   </button>
                   {wrong && (
                     <div className='flex justify-center mt-2'>
-                      <div className='badge badge-error'>Credentials Incorrect</div>
+                      <div className='badge badge-error font-light'>Credentials Incorrect</div>
                     </div>
                   )}
                 </div>
