@@ -29,9 +29,9 @@ export default NextAuth({
         if (process.env.PASSWORD !== creds.password) {
           return Promise.resolve(null)
         }
-
         return {
-          name: user.firstName + ' ' + user.lastName,
+          firstName: user.firstName,
+          lastName: user.lastName,
         }
       },
     }),
@@ -54,7 +54,7 @@ export default NextAuth({
     },
     async session({ session, token }) {
       if (token) {
-        session.id = token.name
+        session.user.name = token.name
       }
       return session
     },
