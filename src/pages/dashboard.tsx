@@ -10,6 +10,12 @@ const Dashboard: NextPage = () => {
         <p>Hi {session?.user.name}</p>
       </>
     )
+  } else {
+    return (
+      <div className='h-screen w-screen flex items-center justify-center'>
+        <span className='loading loading-infinity loading-lg' />
+      </div>
+    )
   }
 }
 

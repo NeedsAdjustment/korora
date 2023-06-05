@@ -15,11 +15,11 @@ const Home: NextPage = () => {
   const [wrong, setWrong] = useState(false)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
-  const session = useSession()
+  const { data: session, status } = useSession()
   const [pushed, setPushed] = useState(false)
 
   useEffect(() => {
-    if (session.status === 'authenticated') {
+    if (status === 'authenticated') {
       if (pushed) return
       router.push('/dashboard')
       setPushed(true)
@@ -49,7 +49,7 @@ const Home: NextPage = () => {
     }
   }
 
-  if (session.status === 'unauthenticated') {
+  if (status === 'unauthenticated') {
     return (
       <div data-theme='green'>
         <main className='flex items-center justify-center h-[calc(100dvh)] font-body tracking-wide min-w-[360px] min-h-[750px] px-8 my-8 lg:my-0'>
