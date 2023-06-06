@@ -162,7 +162,7 @@ const Dashboard: NextPage = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 1.2 }}
-            className='max-w-[900px] mb-10'
+            className='flex max-w-[900px] w-[80vw] h-96 mb-10'
           >
             <Map
               reuseMaps
@@ -173,7 +173,7 @@ const Dashboard: NextPage = () => {
                 longitude: parseFloat(process.env.NEXT_PUBLIC_MAP_COORDS.split(',')[1]),
                 zoom: 8,
               }}
-              style={{ display: 'flex', width: '80vw', maxWidth: '700px', height: '50vh' }}
+              style={{ display: 'flex', flex: 1, borderRadius: '1rem' }}
               mapStyle='mapbox://styles/spren/clikciyg5000001q447fchmm7'
             >
               <Marker
