@@ -41,24 +41,24 @@ const Dashboard: NextPage = () => {
 
   if (status === 'authenticated') {
     return (
-      <div data-theme='green' className='font-body font-light text-neutral text-lg tracking-wide'>
+      <div data-theme='green' className='flex items-center font-body font-light text-neutral text-lg tracking-wide'>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1 }}
           className='navbar fixed top-0 px-10 py-8 font-display'
         >
-          <div className='navbar-start'>
+          <div className='flex-1'>
             <button className='btn' onClick={() => signOut()}>
               Log Out
             </button>
           </div>
 
-          <div className='navbar-end'>
+          <div className='flex-none'>
             <button className='btn'>RSVP</button>
           </div>
         </motion.div>
-        <main className='flex flex-col items-center h-[calc(100dvh)] min-w-[360px] min-h-[750px] px-8 lg:my-0'>
+        <main className='flex flex-col items-center h-[calc(100dvh)] min-w-[360px] min-h-[750px] w-full px-8 lg:my-0'>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
