@@ -14,6 +14,7 @@ const Dashboard: NextPage = () => {
   const { data: session, status } = useSession()
 
   const [countdown, setCountdown] = useState('Countdown')
+  const [smallCountdown, setSmallCountdown] = useState('Countdown')
 
   useEffect(() => {
     const targetDate = new Date(process.env.NEXT_PUBLIC_DATE).getTime()
@@ -31,6 +32,7 @@ const Dashboard: NextPage = () => {
         const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
         const seconds = Math.floor((distance % (1000 * 60)) / 1000)
         setCountdown(`${days}d ${hours}h ${minutes}m ${seconds}s`)
+        setSmallCountdown(`${days}d ${hours}h`)
       }
     }, 1000)
 
@@ -44,7 +46,7 @@ const Dashboard: NextPage = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1 }}
-          className='navbar sticky top-0 px-10 py-8 font-display'
+          className='navbar fixed top-0 px-10 py-8 font-display'
         >
           <div className='navbar-start'>
             <button className='btn' onClick={() => signOut()}>
@@ -61,9 +63,17 @@ const Dashboard: NextPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
-            className='mt-[-4.25em] mb-10 font-display font-bold text-base'
+            className='mt-[2.75em] mb-10 font-display font-bold text-base hidden sm:block'
           >
             {countdown}
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1 }}
+            className='mt-[2.75em] mb-10 font-display font-bold text-base block sm:hidden'
+          >
+            {smallCountdown}
           </motion.div>
           <div className='relative flex items-center justify-center w-full h-fit'>
             <motion.div
