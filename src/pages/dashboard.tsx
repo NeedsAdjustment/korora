@@ -46,16 +46,15 @@ const Dashboard: NextPage = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1 }}
-          className='navbar fixed top-0 px-10 py-8 font-display'
+          className='navbar fixed top-0 px-8 py-6 font-display'
         >
           <div className='flex-1'>
-            <button className='btn' onClick={() => signOut()}>
+            <button className='btn w-[110px]' onClick={() => signOut()}>
               Log Out
             </button>
           </div>
-
           <div className='flex-none'>
-            <button className='btn'>RSVP</button>
+            <button className='btn w-[110px]'>Confirm</button>
           </div>
         </motion.div>
         <main className='flex flex-col items-center h-[calc(100dvh)] min-w-[360px] min-h-[750px] w-screen px-8 lg:my-0'>
@@ -63,7 +62,7 @@ const Dashboard: NextPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
-            className='mt-[2.75em] mb-10 font-display font-bold text-base hidden sm:block'
+            className='mt-[2.25em] mb-10 font-display font-bold text-base hidden sm:block'
           >
             {countdown}
           </motion.div>
@@ -71,7 +70,7 @@ const Dashboard: NextPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
-            className='mt-[2.75em] mb-10 font-display font-bold text-base block sm:hidden'
+            className='mt-[2.25em] mb-10 font-display font-bold text-base block sm:hidden'
           >
             {smallCountdown}
           </motion.div>
