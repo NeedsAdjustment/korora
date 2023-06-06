@@ -1,13 +1,14 @@
-export const phrase = {
+export const dashboardText = {
   hidden: { opacity: 1 },
   visible: {
     opacity: 1,
     transition: {
+      delayChildren: 1,
       staggerChildren: 0.05,
     },
   },
 }
-export const delayPhrase = {
+export const loginText = {
   hidden: { opacity: 1 },
   visible: {
     opacity: 1,

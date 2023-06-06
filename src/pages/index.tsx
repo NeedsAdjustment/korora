@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema, ILogin } from './api/auth/validation'
 import Penguins from '../../public/penguins.svg'
 import { motion } from 'framer-motion'
-import { delayPhrase, letter } from '@/utils/motionText'
+import { loginText, letter } from '@/utils/motionText'
 
 const Home: NextPage = () => {
   const { register, handleSubmit, setFocus } = useForm<ILogin>({
@@ -61,7 +61,7 @@ const Home: NextPage = () => {
                 <Image priority style={{ display: 'flex', width: '13em' }} src={Penguins} alt='Penguins' />
               </motion.div>
               <motion.div
-                variants={delayPhrase}
+                variants={loginText}
                 initial='hidden'
                 animate='visible'
                 className='flex flex-col justify-center mt-6 lg:mt-0 card-title font-heading font-medium tracking-wide text-7xl lg:text-8xl text-neutral whitespace-pre'

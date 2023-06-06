@@ -33,6 +33,16 @@ const styreneA = localFont({
       style: 'italic',
     },
     {
+      path: '../../public/fonts/StyreneALC-Medium.otf',
+      weight: '500',
+      style: 'normal',
+    },
+    {
+      path: '../../public/fonts/StyreneALC-MediumItalic.otf',
+      weight: '500',
+      style: 'italic',
+    },
+    {
       path: '../../public/fonts/StyreneALC-Thin.otf',
       weight: '100',
       style: 'normal',
@@ -61,6 +71,7 @@ const styreneB = localFont({
     {
       path: '../../public/fonts/StyreneBLC-Regular.otf',
       weight: '400',
+      style: 'normal',
     },
     {
       path: '../../public/fonts/StyreneBLC-RegularItalic.otf',
