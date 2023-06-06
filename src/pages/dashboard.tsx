@@ -58,7 +58,7 @@ const Dashboard: NextPage = () => {
             <button className='btn'>RSVP</button>
           </div>
         </motion.div>
-        <main className='flex flex-col items-center h-[calc(100dvh)] min-w-[360px] min-h-[750px] w-full px-8 lg:my-0'>
+        <main className='flex flex-col items-center h-[calc(100dvh)] min-w-[360px] min-h-[750px] w-screen px-8 lg:my-0'>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -172,9 +172,9 @@ const Dashboard: NextPage = () => {
               initialViewState={{
                 latitude: parseFloat(process.env.NEXT_PUBLIC_MAP_COORDS.split(',')[0]),
                 longitude: parseFloat(process.env.NEXT_PUBLIC_MAP_COORDS.split(',')[1]),
-                zoom: 10,
+                zoom: 8,
               }}
-              style={{ width: 600, height: 600 }}
+              style={{ display: 'flex', width: '80vw', maxWidth: '700px', height: '50vh' }}
               mapStyle='mapbox://styles/spren/clikciyg5000001q447fchmm7'
             >
               <Marker
