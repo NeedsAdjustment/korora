@@ -7,6 +7,8 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema, ILogin } from './api/auth/validation'
 import Penguins from '../../public/penguins.svg'
+import { motion } from 'framer-motion'
+import { delayPhrase, letter } from '@/utils/motionText'
 
 const Home: NextPage = () => {
   const { register, handleSubmit, setFocus } = useForm<ILogin>({
@@ -55,15 +57,55 @@ const Home: NextPage = () => {
         <main className='flex items-center justify-center h-[calc(100dvh)] font-body tracking-wide min-w-[360px] min-h-[750px] px-8 my-8 lg:my-0'>
           <form onSubmit={handleSubmit(onSubmit)} autoComplete='false'>
             <div className='flex items-center justify-center flex-col w-full lg:space-x-10 lg:flex-row'>
-              <Image priority style={{ display: 'flex', width: '13em' }} src={Penguins} alt='Penguins' />
-              <div className='flex flex-col justify-center mt-6 lg:mt-0'>
-                <h1 className='card-title font-heading font-medium tracking-wider text-7xl lg:text-8xl text-neutral whitespace-pre'>
-                  Emily<span className='font-light'>&</span>
+              <motion.div initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.2 }}>
+                <Image priority style={{ display: 'flex', width: '13em' }} src={Penguins} alt='Penguins' />
+              </motion.div>
+              <motion.div
+                variants={delayPhrase}
+                initial='hidden'
+                animate='visible'
+                className='flex flex-col justify-center mt-6 lg:mt-0 card-title font-heading font-medium tracking-wide text-7xl lg:text-8xl text-neutral whitespace-pre'
+              >
+                <h1>
+                  {'Emily'.split('').map((char, index) => {
+                    return (
+                      <motion.span key={char + '-' + index} variants={letter}>
+                        {char}
+                      </motion.span>
+                    )
+                  })}
+                  <span className='font-light ml-3'>
+                    {'&'.split('').map((char, index) => {
+                      return (
+                        <motion.span key={char + '-' + index} variants={letter}>
+                          {char}
+                        </motion.span>
+                      )
+                    })}
+                  </span>
                 </h1>
-                <h1 className='card-title font-heading font-medium tracking-wide text-7xl lg:text-8xl text-neutral whitespace-pre ml-5'>Joshua</h1>
-              </div>
-              <div className='divider invisible lg:visible lg:divider-horizontal'></div>
-              <div className='grid max-w-96 card  text-base-100 bg-neutral'>
+                <h1>
+                  {'Joshua '.split('').map((char, index) => {
+                    return (
+                      <motion.span key={char + '-' + index} variants={letter}>
+                        {char}
+                      </motion.span>
+                    )
+                  })}
+                </h1>
+              </motion.div>
+              <motion.div
+                initial={{ height: 0 }}
+                animate={{ height: '388px' }}
+                transition={{ duration: 0.5, delay: 0.65 }}
+                className='divider invisible lg:visible lg:divider-horizontal self-center'
+              ></motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 1 }}
+                className='grid max-w-96 card text-base-100 bg-neutral'
+              >
                 <div className='card-body'>
                   <h1 className='card-title justify-center font-display font-light text-5xl mb-6'>Welcome</h1>
                   <div className='form-control w-full max-w-xs'>
@@ -116,7 +158,7 @@ const Home: NextPage = () => {
                     </div>
                   )}
                 </div>
-              </div>
+              </motion.div>
             </div>
           </form>
         </main>

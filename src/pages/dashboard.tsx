@@ -1,26 +1,10 @@
 import { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import { motion } from 'framer-motion'
+import { phrase, letter } from '@/utils/motionText'
 
 const Dashboard: NextPage = () => {
   const { data: session, status } = useSession()
-  const phrase = {
-    hidden: { opacity: 1 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delay: 0,
-        staggerChildren: 0.08,
-      },
-    },
-  }
-  const letter = {
-    hidden: { opacity: 0, y: 50 },
-    visible: {
-      opacity: 1,
-      y: 0,
-    },
-  }
 
   if (status === 'authenticated') {
     return (
