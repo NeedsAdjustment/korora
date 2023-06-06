@@ -64,7 +64,7 @@ const Home: NextPage = () => {
                 variants={loginText}
                 initial='hidden'
                 animate='visible'
-                className='flex flex-col justify-center mt-6 lg:mt-0 card-title font-heading font-medium tracking-wide text-7xl lg:text-8xl text-neutral whitespace-pre'
+                className='flex flex-col justify-center mt-6 mb-9 lg:my-0 card-title font-heading font-medium tracking-wide text-7xl lg:text-8xl text-neutral whitespace-pre'
               >
                 <h1>
                   {'Emily'.split('').map((char, index) => {
@@ -98,7 +98,7 @@ const Home: NextPage = () => {
                 initial={{ height: 0 }}
                 animate={{ height: '388px' }}
                 transition={{ duration: 0.5, delay: 0.65 }}
-                className='divider invisible lg:visible lg:divider-horizontal self-center'
+                className='divider hidden lg:flex lg:divider-horizontal self-center'
               ></motion.div>
               <motion.div
                 initial={{ opacity: 0, scale: 0 }}
