@@ -5,6 +5,6 @@ WIP Wedding website using **[Next.js](https://nextjs.org)**, **[Prisma](https://
 ## Features:
 
 - [x] Authentication
-- [ ] Maps
+- [x] Maps
 - [ ] RSVP form
 - [ ] Gift Registry
