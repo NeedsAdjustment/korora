@@ -12,6 +12,8 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 const Dashboard: NextPage = () => {
   const { data: session, status } = useSession()
 
+  const [openTab, setOpenTab] = useState(1)
+
   const mapRef = useRef<MapRef>()
   const [zoomed, setZoomed] = useState(false)
   const handleZoom = () => {
@@ -146,7 +148,7 @@ const Dashboard: NextPage = () => {
             variants={dashboardText}
             initial='hidden'
             animate='visible'
-            className='justify-center max-w-[85vw] font-heading font-light tracking-wide text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-10'
+            className='justify-center max-w-[85vw] font-heading font-light tracking-wide text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-4'
           >
             {'Hi, '.split('').map((char, index) => {
               return (
@@ -181,13 +183,101 @@ const Dashboard: NextPage = () => {
             transition={{ duration: 0.3, delay: 1.2 }}
             className='max-w-[900px] mb-10'
           >
-            Location: {process.env.NEXT_PUBLIC_LOCATION}
+            <ul className='menu menu-horizontal bg-base-200 text-accent rounded-box mt-6'>
+              <li>
+                <a
+                  data-tip='Map'
+                  className={'tooltip tooltip-primary' + (openTab === 1 && ' active hover:bg-neutral')}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setOpenTab(1)
+                  }}
+                >
+                  <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='currentColor' viewBox='0 -960 960 960'>
+                    <path
+                      xmlns='http://www.w3.org/2000/svg'
+                      d='m598.5-130-237-83-180 70q-19 8-35.5-3.75t-16.5-32.184V-723.85q0-12.65 7.25-22.65 7.25-10 19.75-14.5l205-70 237 83 180-70q19-8 35.5 3.75t16.5 32.22v545.858q0 12.672-7.25 22.672T803.5-200l-205 70Zm-38-92v-461l-161-56v461l161 56Zm75 0 120-40v-467l-120 46v461Zm-431-10 120-46v-461l-120 40v467Zm431-451v461-461Zm-311-56v461-461Z'
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  data-tip='Info'
+                  className={'tooltip tooltip-primary' + (openTab === 2 && ' active hover:bg-neutral')}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setOpenTab(2)
+                  }}
+                >
+                  <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='currentColor' viewBox='0 -960 960 960'>
+                    <path
+                      xmlns='http://www.w3.org/2000/svg'
+                      d='M443-285h75v-234h-75v234Zm36.895-311Q496-596 507-606.895q11-10.894 11-27Q518-650 507.105-661q-10.894-11-27-11Q464-672 453-661.105q-11 10.894-11 27Q442-618 452.895-607q10.894 11 27 11ZM480-90q-80.907 0-152.065-30.763-71.159-30.763-123.797-83.5Q151.5-257 120.75-328.087 90-399.175 90-480q0-80.907 30.763-152.065 30.763-71.159 83.5-123.797Q257-808.5 328.087-839.25 399.175-870 480-870q80.907 0 152.065 30.763 71.159 30.763 123.797 83.5Q808.5-703 839.25-631.913 870-560.825 870-480q0 80.907-30.763 152.065-30.763 71.159-83.5 123.797Q703-151.5 631.913-120.75 560.825-90 480-90Zm0-75q131.5 0 223.25-91.75T795-480q0-131.5-91.75-223.25T480-795q-131.5 0-223.25 91.75T165-480q0 131.5 91.75 223.25T480-165Zm0-315Z'
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  data-tip='RSVP'
+                  className={'tooltip tooltip-primary' + (openTab === 3 && ' active hover:bg-neutral')}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setOpenTab(3)
+                  }}
+                >
+                  <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6 rotate-45' fill='currentColor' viewBox='0 -960 960 960'>
+                    <path
+                      xmlns='http://www.w3.org/2000/svg'
+                      d='M480.438-169Q447-169 422.75-146T398.5-90h-115q-30.938 0-52.969-22.031Q208.5-134.062 208.5-165v-631q0-30.938 22.031-52.969Q252.562-871 283.5-871h115q0 33 24.25 56t57.688 23q33.438 0 57.25-23 23.812-23 23.812-56h115q30.938 0 52.969 22.031Q751.5-826.938 751.5-796v631q0 30.938-22.031 52.969Q707.438-90 676.5-90h-115q0-33-23.812-56t-57.25-23Zm-.032-75q42.594 0 78.344 21.25Q594.5-201.5 615.5-165h61v-631h-61q-21 36.5-56.871 57.75Q522.759-717 480.5-717q-42.629 0-78.815-21-36.185-21-57.185-58h-61v631h61q21-37 57.156-58 36.155-21 78.75-21ZM480-480.5Z'
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  className={'tooltip tooltip-primary' + (openTab === 4 && ' active hover:bg-neutral')}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setOpenTab(4)
+                  }}
+                >
+                  <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='currentColor' viewBox='0 -960 960 960'>
+                    <path
+                      xmlns='http://www.w3.org/2000/svg'
+                      d='M243.5-82.5q-30.938 0-52.969-22.031Q168.5-126.562 168.5-157.5v-473q0-30.938 22.031-52.969Q212.562-705.5 243.5-705.5h79q0-65 46.272-111t111.25-46q64.978 0 111.228 46.119Q637.5-770.263 637.5-705.5h79q30.938 0 52.969 22.031Q791.5-661.438 791.5-630.5v473q0 30.938-22.031 52.969Q747.438-82.5 716.5-82.5h-473Zm0-75h473v-473h-79v82.5q0 15.5-11 26.5t-26.5 11q-15.5 0-26.5-11t-11-26.5v-82.5h-165v82.5q0 15.5-11 26.5t-26.5 11q-15.5 0-26.5-11t-11-26.5v-82.5h-79v473Zm154-548h165q0-34-24.228-58t-58.25-24q-34.022 0-58.272 24.088-24.25 24.087-24.25 57.912Zm-154 548v-473 473Z'
+                    />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  data-tip='Us?'
+                  className={'tooltip tooltip-primary' + (openTab === 5 && ' active hover:bg-neutral')}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    setOpenTab(5)
+                  }}
+                >
+                  <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='currentColor' viewBox='0 -960 960 960'>
+                    <path
+                      xmlns='http://www.w3.org/2000/svg'
+                      d='M117.5-202.5q-30.938 0-52.969-22.031Q42.5-246.562 42.5-277.5v-405q0-30.938 22.031-52.969Q86.562-757.5 117.5-757.5h405q30.938 0 52.969 22.031Q597.5-713.438 597.5-682.5v405q0 30.938-22.031 52.969Q553.438-202.5 522.5-202.5h-405Zm602.5-320q-15.5 0-26.5-11t-11-26.5v-160q0-15.5 11-26.5t26.5-11h160q15.5 0 26.5 11t11 26.5v160q0 15.5-11 26.5t-26.5 11H720Zm37.5-75h85v-85h-85v85Zm-640 320h405v-405h-405v405Zm47.5-85h310L375-496l-75 100-55-73-80 106.5Zm555 160q-15.5 0-26.5-11t-11-26.5v-160q0-15.5 11-26.5t26.5-11h160q15.5 0 26.5 11t11 26.5v160q0 15.5-11 26.5t-26.5 11H720Zm37.5-75h85v-85h-85v85Zm-640 0v-405 405Zm640-320v-85 85Zm0 320v-85 85Z'
+                    />
+                  </svg>
+                </a>
+              </li>
+            </ul>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 1.2 }}
-            className='flex flex-col max-w-[700px] w-[85vw] min-h-[25em] mb-20 bg-base-200 text-accent rounded-2xl xl-shadow'
+            className={
+              'flex flex-col max-w-[700px] w-[85vw] min-h-[25em] mb-20 bg-base-200 text-accent rounded-2xl xl-shadow' +
+              (openTab === 1 ? ' block' : ' hidden')
+            }
           >
             <Map
               ref={mapRef}
