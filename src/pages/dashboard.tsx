@@ -1,12 +1,12 @@
 import { NextPage } from 'next'
 import Image from 'next/image'
 import { useSession } from 'next-auth/react'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { dashboardText, letter } from '@/utils/motionText'
 import Penguins from '../../public/penguins.svg'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { signOut } from 'next-auth/react'
-import Map, { MapRef, Marker, NavigationControl } from 'react-map-gl'
+import Map, { MapRef, Marker } from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 const Dashboard: NextPage = () => {
@@ -21,13 +21,13 @@ const Dashboard: NextPage = () => {
       mapRef.current?.flyTo({
         center: [parseFloat(process.env.NEXT_PUBLIC_MAP_COORDS.split(',')[1]), parseFloat(process.env.NEXT_PUBLIC_MAP_COORDS.split(',')[0])],
         zoom: 9,
-        duration: 2000,
+        duration: 1000,
       })
     } else {
       mapRef.current?.flyTo({
         center: [parseFloat(process.env.NEXT_PUBLIC_COUNTRY_COORDS.split(',')[1]), parseFloat(process.env.NEXT_PUBLIC_COUNTRY_COORDS.split(',')[0])],
         zoom: 3.5,
-        duration: 2000,
+        duration: 1000,
       })
     }
     setZoomed(!zoomed)
@@ -270,63 +270,64 @@ const Dashboard: NextPage = () => {
               </li>
             </ul>
           </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: 1.2 }}
-            className={
-              'flex flex-col max-w-[700px] w-[85vw] min-h-[25em] mb-20 bg-base-200 text-accent rounded-2xl xl-shadow' +
-              (openTab === 1 ? ' block' : ' hidden')
-            }
-          >
-            <Map
-              ref={mapRef}
-              reuseMaps
-              mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-              mapLib={import('mapbox-gl')}
-              initialViewState={{
-                latitude: parseFloat(process.env.NEXT_PUBLIC_COUNTRY_COORDS.split(',')[0]),
-                longitude: parseFloat(process.env.NEXT_PUBLIC_COUNTRY_COORDS.split(',')[1]),
-                zoom: 3.5,
-              }}
-              style={{ zIndex: 100, display: 'flex', flex: 1, alignContent: 'right', borderTopLeftRadius: '1rem', borderTopRightRadius: '1rem' }}
-              mapStyle='mapbox://styles/spren/clikciyg5000001q447fchmm7'
-              dragRotate={false}
-              touchPitch={false}
-            >
-              <Marker
-                color='#31553d'
-                latitude={parseFloat(process.env.NEXT_PUBLIC_MARKER_COORDS.split(',')[0])}
-                longitude={parseFloat(process.env.NEXT_PUBLIC_MARKER_COORDS.split(',')[1])}
-                anchor='bottom'
-              ></Marker>
-              <label className='btn btn-circle absolute top-0 right-0 m-2 btn-neutral swap swap-rotate'>
-                <input type='checkbox' onChange={handleZoom} />
-                <svg className='swap-off fill-current w-5' xmlns='http://www.w3.org/2000/svg' height='40' viewBox='0 -960 960 960' width='40'>
-                  <path d='M147.333-100 100-147.333l139.334-139.334H120v-66.666h233.333V-120h-66.666v-119.334L147.333-100Zm665.334 0L673.333-239.334V-120h-66.666v-233.333H840v66.666H720.666L860-147.333 812.667-100ZM120-606.667v-66.666h119.334L100-812.667 147.333-860l139.334 139.334V-840h66.666v233.333H120Zm486.667 0V-840h66.666v119.334l140.001-140.001 47.333 47.333-140.001 140.001H840v66.666H606.667Z' />
-                </svg>
-                <svg className='swap-on fill-current w-5' xmlns='http://www.w3.org/2000/svg' height='40' viewBox='0 -960 960 960' width='40'>
-                  <path d='M120-120v-233.333h66.666v119.334L326.667-374 374-326.667 233.999-186.666h119.334V-120H120Zm486.667 0v-66.666h119.334L586.667-326 634-373.333l139.334 139.334v-119.334H840V-120H606.667ZM326-586.667 186.666-726.001v119.334H120V-840h233.333v66.666H233.999L373.333-634 326-586.667Zm308 0L586.667-634l139.334-139.334H606.667V-840H840v233.333h-66.666v-119.334L634-586.667Z' />
-                </svg>
-              </label>
-            </Map>
-            <div>
-              <h2 className='mx-5 pt-5 justify-center font-medium text-xl text-center tracking-wide'>
-                {process.env.NEXT_PUBLIC_VENUE.toLowerCase()}
-                <span className='hidden sm:inline'> • </span>
-                <br className='sm:hidden'></br>
-                {process.env.NEXT_PUBLIC_LOCATION.toLowerCase()}
-              </h2>
-              <p className='mx-5 mb-5 justify-center font-medium text-xl text-center tracking-wide'>
-                {formattedDayNum}
-                <sup>Þ </sup>
-                {formattedDate}
-                <span className='hidden sm:inline'> • </span>
-                <br className='sm:hidden' />
-                {formattedDay + ' ' + formattedTime}
-              </p>
-            </div>
-          </motion.div>
+          <AnimatePresence>
+            {openTab === 1 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                exit={{ opacity: 0 }}
+                animate={{ opacity: 1, y: 0 }}
+                className='flex flex-col max-w-[700px] w-[85vw] min-h-[25em] mb-20 bg-base-200 text-accent rounded-2xl xl-shadow transition-all-2'
+              >
+                <Map
+                  ref={mapRef}
+                  reuseMaps
+                  mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+                  mapLib={import('mapbox-gl')}
+                  initialViewState={{
+                    latitude: parseFloat(process.env.NEXT_PUBLIC_COUNTRY_COORDS.split(',')[0]),
+                    longitude: parseFloat(process.env.NEXT_PUBLIC_COUNTRY_COORDS.split(',')[1]),
+                    zoom: 3.5,
+                  }}
+                  style={{ zIndex: 100, display: 'flex', flex: 1, alignContent: 'right', borderTopLeftRadius: '1rem', borderTopRightRadius: '1rem' }}
+                  mapStyle='mapbox://styles/spren/clikciyg5000001q447fchmm7'
+                  dragRotate={false}
+                  touchPitch={false}
+                >
+                  <Marker
+                    color='#31553d'
+                    latitude={parseFloat(process.env.NEXT_PUBLIC_MARKER_COORDS.split(',')[0])}
+                    longitude={parseFloat(process.env.NEXT_PUBLIC_MARKER_COORDS.split(',')[1])}
+                    anchor='bottom'
+                  ></Marker>
+                  <label className='btn btn-circle absolute top-0 right-0 m-2 btn-neutral swap swap-rotate'>
+                    <input type='checkbox' onChange={handleZoom} />
+                    <svg className='swap-off fill-current w-5' xmlns='http://www.w3.org/2000/svg' height='40' viewBox='0 -960 960 960' width='40'>
+                      <path d='M147.333-100 100-147.333l139.334-139.334H120v-66.666h233.333V-120h-66.666v-119.334L147.333-100Zm665.334 0L673.333-239.334V-120h-66.666v-233.333H840v66.666H720.666L860-147.333 812.667-100ZM120-606.667v-66.666h119.334L100-812.667 147.333-860l139.334 139.334V-840h66.666v233.333H120Zm486.667 0V-840h66.666v119.334l140.001-140.001 47.333 47.333-140.001 140.001H840v66.666H606.667Z' />
+                    </svg>
+                    <svg className='swap-on fill-current w-5' xmlns='http://www.w3.org/2000/svg' height='40' viewBox='0 -960 960 960' width='40'>
+                      <path d='M120-120v-233.333h66.666v119.334L326.667-374 374-326.667 233.999-186.666h119.334V-120H120Zm486.667 0v-66.666h119.334L586.667-326 634-373.333l139.334 139.334v-119.334H840V-120H606.667ZM326-586.667 186.666-726.001v119.334H120V-840h233.333v66.666H233.999L373.333-634 326-586.667Zm308 0L586.667-634l139.334-139.334H606.667V-840H840v233.333h-66.666v-119.334L634-586.667Z' />
+                    </svg>
+                  </label>
+                </Map>
+                <div>
+                  <h2 className='mx-5 pt-5 justify-center font-medium text-xl text-center tracking-wide'>
+                    {process.env.NEXT_PUBLIC_VENUE.toLowerCase()}
+                    <span className='hidden sm:inline'> • </span>
+                    <br className='sm:hidden'></br>
+                    {process.env.NEXT_PUBLIC_LOCATION.toLowerCase()}
+                  </h2>
+                  <p className='mx-5 mb-5 justify-center font-medium text-xl text-center tracking-wide'>
+                    {formattedDayNum}
+                    <sup>Þ </sup>
+                    {formattedDate}
+                    <span className='hidden sm:inline'> • </span>
+                    <br className='sm:hidden' />
+                    {formattedDay + ' ' + formattedTime}
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </main>
       </div>
     )
