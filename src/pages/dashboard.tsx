@@ -412,18 +412,18 @@ const Dashboard: NextPage = () => {
                 <div className='flex'>
                   {slides.map((image, index) => (
                     <div className='flex-[0_0_100%]' key={index}>
-                      <Image src={image} className='rounded-[1rem] object-contain w-full h-full' alt={''} sizes='85vw' />
+                      <Image src={image} className='rounded-[1rem] object-contain w-full h-full' placeholder='blur' alt={''} sizes='85vw' />
                     </div>
                   ))}
                 </div>
               </div>
               <dialog id='modal' className='modal bg-black'>
                 <form method='dialog' className='flex flex-col items-center justify-center h-screen w-screen'>
-                  <div className={'flex overflow-hidden bg-black center-items rounded-[1rem]'} ref={emblaModalRef}>
+                  <div className={'flex overflow-hidden bg-black center-items'} ref={emblaModalRef}>
                     <div className='flex'>
                       {slides.map((image, index) => (
                         <div className='flex-[0_0_100%]' key={index}>
-                          <Image src={image} className='rounded-[1rem] object-contain w-full h-full' alt={''} sizes='85vw' />
+                          <Image src={image} className='rounded-[1rem] object-contain w-full h-full' placeholder='blur' alt={''} sizes='85vw' />
                         </div>
                       ))}
                     </div>
