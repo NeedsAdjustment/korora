@@ -11,6 +11,12 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 import slides from '@/utils/slides'
 import useEmblaCarousel from 'embla-carousel-react'
 
+declare global {
+  interface Window {
+    modal: any
+  }
+}
+
 const Dashboard: NextPage = () => {
   const { data: session, status } = useSession()
   const [loading, setLoading] = useState(false)
