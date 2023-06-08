@@ -11,6 +11,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 
 const Dashboard: NextPage = () => {
   const { data: session, status } = useSession()
+  const [loading, setLoading] = useState(false)
 
   const [openTab, setOpenTab] = useState(1)
 
@@ -68,23 +69,8 @@ const Dashboard: NextPage = () => {
 
   if (status === 'authenticated') {
     return (
-      <div data-theme='green' className='flex overflow-x-hidden items-center font-body font-light text-neutral text-lg tracking-wide'>
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1 }}
-          className='navbar fixed top-0 px-8 py-6 font-display'
-        >
-          <div className='flex-1'>
-            <button className='btn w-[110px]' onClick={() => signOut()}>
-              Log Out
-            </button>
-          </div>
-          <div className='flex-none'>
-            <button className='btn w-[110px]'>Confirm</button>
-          </div>
-        </motion.div>
-        <main className='flex flex-col items-center h-[calc(100dvh)] min-w-[360px] min-h-[750px] w-screen px-8 lg:my-0'>
+      <div data-theme='green' className='flex min-w-[360px] overflow-x-hidden items-center font-body font-light text-neutral text-lg tracking-wide'>
+        <main className='flex flex-col items-center h-[calc(100dvh)] min-w-[360px] w-screen px-8 lg:my-0'>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -97,7 +83,7 @@ const Dashboard: NextPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
-            className='mt-[2.25em] mb-10 font-display font-bold text-base block sm:hidden'
+            className='mt-[1.75em] mb-10 font-display font-bold text-base block sm:hidden'
           >
             {smallCountdown}
           </motion.div>
@@ -148,7 +134,7 @@ const Dashboard: NextPage = () => {
             variants={dashboardText}
             initial='hidden'
             animate='visible'
-            className='justify-center max-w-[85vw] font-heading font-light tracking-wide text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-4'
+            className='justify-center text-justify max-w-[85vw] min-w-[300px] font-heading font-light tracking-wide text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-4'
           >
             {'Hi, '.split('').map((char, index) => {
               return (
@@ -276,7 +262,7 @@ const Dashboard: NextPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 exit={{ opacity: 0 }}
                 animate={{ opacity: 1, y: 0 }}
-                className='flex flex-col max-w-[700px] w-[85vw] min-h-[25em] mb-20 bg-base-200 text-accent rounded-2xl xl-shadow transition-all-2'
+                className='flex flex-col max-w-[700px] w-[85vw]  min-w-[294px] min-h-[25em] mb-20 bg-base-200 text-accent rounded-2xl xl-shadow transition-all-2'
               >
                 <Map
                   ref={mapRef}
@@ -288,7 +274,7 @@ const Dashboard: NextPage = () => {
                     longitude: parseFloat(process.env.NEXT_PUBLIC_COUNTRY_COORDS.split(',')[1]),
                     zoom: 3.5,
                   }}
-                  style={{ zIndex: 100, display: 'flex', flex: 1, alignContent: 'right', borderTopLeftRadius: '1rem', borderTopRightRadius: '1rem' }}
+                  style={{ display: 'flex', flex: 1, alignContent: 'right', borderTopLeftRadius: '1rem', borderTopRightRadius: '1rem' }}
                   mapStyle='mapbox://styles/spren/clikciyg5000001q447fchmm7'
                   dragRotate={false}
                   touchPitch={false}
@@ -329,6 +315,27 @@ const Dashboard: NextPage = () => {
             )}
           </AnimatePresence>
         </main>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1 }}
+          className='navbar fixed top-0 px-6 py-4 sm:px-8 sm:py-6 font-display'
+        >
+          <div className='flex-1'>
+            <button
+              className='btn text-xs w-[100px] sm:text-sm sm:w-[110px] bg-opacity-80'
+              onClick={() => {
+                setLoading(true)
+                signOut()
+              }}
+            >
+              {loading ? <span className='loading loading-infinity' /> : 'Log Out'}
+            </button>
+          </div>
+          <div className='flex-none'>
+            <button className='btn text-xs w-[100px] sm:text-sm sm:w-[110px] bg-opacity-80'>Confirm</button>
+          </div>
+        </motion.div>
       </div>
     )
   } else {
