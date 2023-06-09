@@ -1,4 +1,4 @@
-import { NextPage } from 'next'
+import { GetStaticProps, NextPage } from 'next'
 import Image from 'next/image'
 import { useSession } from 'next-auth/react'
 import { motion } from 'framer-motion'
@@ -10,19 +10,45 @@ import Map, { MapRef, Marker } from 'react-map-gl'
 import 'mapbox-gl/dist/mapbox-gl.css'
 import slides from '@/utils/slides'
 import useEmblaCarousel from 'embla-carousel-react'
-
+import { prisma } from '../prisma'
+import { useForm } from 'react-hook-form'
+import { IRSVP, rsvpSchema } from './api/validation'
+import { zodResolver } from '@hookform/resolvers/zod'
 declare global {
   interface Window {
     modal: any
   }
 }
 
-const Dashboard: NextPage = () => {
+export async function getServerSideProps() {
+  const rsvps = await prisma.user.findMany({
+    select: {
+      firstName: true,
+      lastName: true,
+      RSVP: true,
+      RSVPOthersYes: true,
+      RSVPOthersNo: true,
+    },
+  })
+  const gifts = await prisma.gift.findMany({
+    select: {
+      id: true,
+      name: true,
+      link: true,
+    },
+  })
+  return {
+    props: {
+      rsvps,
+      gifts,
+    },
+  }
+}
+
+const Dashboard: NextPage<any> = ({ rsvps, gifts }) => {
   const { data: session, status } = useSession()
   const [loading, setLoading] = useState(false)
-
   const [openTab, setOpenTab] = useState(1)
-
   const mapRef = useRef<MapRef>()
   const [zoomed, setZoomed] = useState(false)
   const handleZoom = () => {
@@ -55,6 +81,74 @@ const Dashboard: NextPage = () => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, skipSnaps: true, startIndex: index })
   const [emblaModalRef, emblaModalApi] = useEmblaCarousel({ loop: true, skipSnaps: true, startIndex: index })
 
+  let rsvp = rsvps.map((rsvp) => {
+    if (rsvp.firstName == session?.user?.firstName && rsvp.lastName == session?.user?.lastName) {
+      return rsvp
+    }
+  })
+  rsvp = rsvp.filter((item) => item !== undefined)[0]
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<IRSVP>({
+    resolver: zodResolver(rsvpSchema),
+  })
+
+  const [rsvpLoading, setRSVPLoading] = useState(false)
+  const [othersRSVP, setOthersRSVP] = useState(false)
+  const [rsvped, setRSVPed] = useState(false)
+  const [fieldsDisabled, setFieldsDisabled] = useState(false)
+  const [rsvpSent, setRSVPSent] = useState(false)
+
+  useEffect(() => {
+    if (rsvpSent) {
+      setOthersRSVP(true)
+      setRSVPed(true)
+      setFieldsDisabled(true)
+    } else if (rsvp?.RSVP === true || rsvp?.RSVP === false) {
+      console.log(rsvp?.RSVP)
+      reset({
+        firstName: session?.user?.firstName,
+        lastName: session?.user?.lastName,
+        RSVP: rsvp?.RSVP ? true : false,
+        RSVPOthersYes: rsvp?.RSVPOthersYes,
+        RSVPOthersNo: rsvp?.RSVPOthersNo,
+        RSVPDate: new Date(),
+      })
+      if (rsvp?.RSVPOthersYes || rsvp?.RSVPOthersNo) {
+        setOthersRSVP(true)
+        setRSVPed(true)
+      }
+      setFieldsDisabled(true)
+    } else {
+      reset({
+        firstName: session?.user?.firstName,
+        lastName: session?.user?.lastName,
+        RSVPOthersYes: rsvp?.RSVPOthersYes,
+        RSVPOthersNo: rsvp?.RSVPOthersNo,
+        RSVPDate: new Date(),
+      })
+    }
+  }, [rsvp, rsvpSent])
+
+  const onSubmit = async (data) => {
+    setRSVPLoading(true)
+    try {
+      await fetch('api/updateRSVP', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+    } catch (error) {
+      console.error(error)
+    }
+    setRSVPLoading(false)
+    setRSVPSent(true)
+  }
+
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev()
   }, [emblaApi])
@@ -72,22 +166,18 @@ const Dashboard: NextPage = () => {
   }, [emblaModalApi])
 
   const onSettle = useCallback((emblaApi) => {
-    console.log('b')
     if (emblaApi) setIndex(emblaApi.selectedScrollSnap())
   }, [])
 
   const onSettleModal = useCallback((emblaModalApi) => {
-    console.log('a')
     if (emblaModalApi) setIndex(emblaModalApi.selectedScrollSnap())
   }, [])
 
   const onInit = useCallback((emblaApi) => {
-    console.log(index)
     emblaApi.scrollTo(index)
   }, [])
 
   const onModalInit = useCallback((emblaModalApi) => {
-    console.log(index)
     emblaModalApi.scrollTo(index)
   }, [])
 
@@ -425,7 +515,7 @@ const Dashboard: NextPage = () => {
                     <input type='radio' name='info' />
                     <div className='collapse-title text-xl font-medium'>Contact</div>
                     <div className='collapse-content'>
-                      <p className='text-sm sm:text-base text-neutral'>
+                      <div className='text-sm sm:text-base text-neutral'>
                         Just DM one of us (
                         <div className='tooltip' data-tip='josh'>
                           <a
@@ -477,7 +567,7 @@ const Dashboard: NextPage = () => {
                           </a>
                         </div>{' '}
                         here.
-                      </p>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -488,16 +578,88 @@ const Dashboard: NextPage = () => {
                 layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className='flex flex-col max-w-[700px] w-[85vw] min-w-[296px] min-h-[25em] bg-base-200 text-accent rounded-2xl xl-shadow'
-              ></motion.div>
+                className='flex flex-col max-w-[700px] w-[85vw] min-w-[296px] py-8 bg-base-200 text-accent rounded-2xl xl-shadow'
+              >
+                <p className={'mx-5 mb-5 justify-center font-medium text-xl text-center tracking-wide' + (fieldsDisabled ? '' : ' hidden')}>
+                  Thank you for RSVPing!
+                </p>
+                <form onSubmit={handleSubmit(onSubmit)} autoComplete='false' className='flex flex-1 items-center justify-center'>
+                  <motion.div layout className='form-control'>
+                    <input {...register('firstName')} type='hidden' />
+                    <input {...register('lastName')} type='hidden' />
+                    <div className='flex flex-row items-center gap-2 sm:gap-3 w-[75vw] max-w-[575px] min-w-[270px] mb-3'>
+                      <p>1.</p>
+                      <select
+                        {...register('RSVP')}
+                        onChange={() => setRSVPed(true)}
+                        className='select select-bordered md:select-lg flex-grow'
+                        disabled={fieldsDisabled}
+                      >
+                        <option disabled selected className={'' + (rsvped ? ' hidden' : '')}>
+                          Confirm your attendance
+                        </option>
+                        <option value='true'>I'll be there!</option>
+                        <option value='false'>I won't be able to make it.</option>
+                      </select>
+                    </div>
+                    <div className={'flex flex-row gap-2 sm:gap-3 w-[75vw] max-w-[575px] min-w-[270px] mb-3' + (rsvped ? '' : ' hidden')}>
+                      <p className='leading-[40px] md:leading-[48px]'>2.</p>
+                      <div className='flex-col w-full'>
+                        <div className='flex-row label cursor-pointer mb-3'>
+                          <span className='label-text text-xs sm:text-sm md:text-base'>I'm RSVPing on behalf of others</span>
+                          <input
+                            type='checkbox'
+                            checked={othersRSVP}
+                            className='checkbox ml-auto md:checkbox-lg'
+                            onClick={() => setOthersRSVP(!othersRSVP)}
+                            disabled={fieldsDisabled}
+                          />
+                        </div>
+                        <div className={'flex flex-row items-center gap-2 sm:gap-3 mb-3' + (othersRSVP ? '' : ' hidden')}>
+                          <p>a.</p>
+                          <input
+                            {...register('RSVPOthersYes')}
+                            className={'input input-bordered md:input-lg flex-grow' + (othersRSVP ? '' : ' hidden')}
+                            type='text'
+                            placeholder='Who is attending?'
+                            defaultValue={rsvp.RSVPOthersYes === null ? '' : rsvp.RSVPOthersYes}
+                            disabled={fieldsDisabled}
+                          />
+                        </div>
+                        <div className={'flex flex-row items-center gap-2 sm:gap-3 mb-3' + (othersRSVP ? '' : ' hidden')}>
+                          <p>b.</p>
+                          <input
+                            {...register('RSVPOthersNo')}
+                            className='input input-bordered md:input-lg flex-grow'
+                            type='text'
+                            placeholder='Who is not attending?'
+                            defaultValue={rsvp.RSVPOthersNo === null ? '' : rsvp.RSVPOthersNo}
+                            disabled={fieldsDisabled}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <input {...register('RSVPDate')} type='hidden' />
+                    <button
+                      className={'btn btn-secondary mt-2 font-display font-bold tracking-wider' + (rsvped ? '' : ' hidden')}
+                      type='submit'
+                      disabled={fieldsDisabled}
+                    >
+                      {(rsvpLoading && <span className='loading loading-infinity loading-sm'></span>) || 'RSVP'}
+                    </button>
+                  </motion.div>
+                </form>
+              </motion.div>
             )}
             {openTab === 4 && (
               <motion.div
                 layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className='flex flex-col max-w-[700px] w-[85vw] min-w-[296px] min-h-[25em] bg-base-200 text-accent rounded-2xl xl-shadow'
-              ></motion.div>
+                className='flex justify-center items-center max-w-[700px] w-[85vw] min-w-[296px] min-h-[25em] bg-base-200 text-accent rounded-2xl xl-shadow'
+              >
+                <p className='font-medium text-xl text-center tracking-wide'>gift registry coming soon</p>
+              </motion.div>
             )}
             {openTab === 5 && (
               <motion.div
@@ -589,7 +751,9 @@ const Dashboard: NextPage = () => {
           className='fixed top-0 right-0 pr-6 pt-4 sm:px-8 sm:py-6 font-display'
         >
           <div className='flex-none'>
-            <button className='btn text-xs w-[100px] sm:text-sm sm:w-[110px] bg-opacity-80'>Confirm</button>
+            <button className='btn text-xs w-[100px] sm:text-sm sm:w-[110px] bg-opacity-80' onClick={() => setOpenTab(3)}>
+              Confirm
+            </button>
           </div>
         </motion.div>
       </div>

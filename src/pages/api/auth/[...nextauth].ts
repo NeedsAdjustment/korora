@@ -53,6 +53,7 @@ export default NextAuth({
         token.firstName = user.firstName
         token.lastName = user.lastName
         token.dinner = user.dinner
+        token.bridalParty = user.bridalParty
       }
       return token
     },
@@ -61,6 +62,7 @@ export default NextAuth({
         session.user.firstName = token.firstName as string
         session.user.lastName = token.lastName as string
         session.user.dinner = token.dinner as boolean
+        session.user.bridalParty = token.bridalParty as boolean
       }
       return session
     },

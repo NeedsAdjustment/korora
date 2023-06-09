@@ -3,6 +3,8 @@ import localFont from 'next/font/local'
 import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react'
 import Head from 'next/head'
+import { Router } from 'next/router'
+import { useEffect, useState } from 'react'
 
 const ogg = localFont({
   src: [
@@ -93,6 +95,25 @@ const styreneB = localFont({
 })
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [loading, setLoading] = useState(false)
+  useEffect(() => {
+    const start = () => {
+      console.log('start')
+      setLoading(true)
+    }
+    const end = () => {
+      console.log('finished')
+      setLoading(false)
+    }
+    Router.events.on('routeChangeStart', start)
+    Router.events.on('routeChangeComplete', end)
+    Router.events.on('routeChangeError', end)
+    return () => {
+      Router.events.off('routeChangeStart', start)
+      Router.events.off('routeChangeComplete', end)
+      Router.events.off('routeChangeError', end)
+    }
+  }, [])
   return (
     <SessionProvider session={pageProps.session}>
       <main className={`${ogg.variable} ${styreneA.variable} ${styreneB.variable}`}>
@@ -108,7 +129,13 @@ export default function App({ Component, pageProps }: AppProps) {
           <meta name='msapplication-TileColor' content='#603cba' />
           <meta name='theme-color' content='#31553d' />
         </Head>
-        <Component {...pageProps} />
+        {loading ? (
+          <div className='h-screen w-screen flex items-center justify-center'>
+            <span className='loading loading-infinity loading-lg' />
+          </div>
+        ) : (
+          <Component {...pageProps} />
+        )}
       </main>
     </SessionProvider>
   )
