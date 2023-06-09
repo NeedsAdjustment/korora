@@ -50,14 +50,16 @@ export default NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.name = user.firstName + ' ' + user.lastName
+        token.firstName = user.firstName
+        token.lastName = user.lastName
         token.dinner = user.dinner
       }
       return token
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       if (token) {
-        session.user.name = token.name
+        session.user.firstName = token.firstName as string
+        session.user.lastName = token.lastName as string
         session.user.dinner = token.dinner as boolean
       }
       return session

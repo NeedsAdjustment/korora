@@ -198,7 +198,7 @@ const Dashboard: NextPage = () => {
             variants={dashboardText}
             initial='hidden'
             animate='visible'
-            className='justify-center sm:text-center max-w-[85vw] min-w-[296px] font-heading font-light tracking-wide text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-4'
+            className='justify-center text-center max-w-[85vw] min-w-[296px] font-heading font-light tracking-wide text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-4'
           >
             {'Hi, '.split('').map((char, index) => {
               return (
@@ -208,24 +208,17 @@ const Dashboard: NextPage = () => {
               )
             })}
             <span className='font-medium'>
-              {session.user.name
-                .split(' ')[0]
-                .split('')
-                .map((char, index) => {
-                  return (
-                    <motion.span key={char + '-' + index} variants={letter}>
-                      {char}
-                    </motion.span>
-                  )
-                })}
+              {session.user.firstName.split('').map((char, index) => {
+                return (
+                  <motion.span key={char + '-' + index} variants={letter}>
+                    {char}
+                  </motion.span>
+                )
+              })}
             </span>
-            {'!'.split('').map((char, index) => {
-              return (
-                <motion.span key={char + '-' + index} variants={letter}>
-                  {char}
-                </motion.span>
-              )
-            })}
+            <motion.span key={'!'} variants={letter}>
+              !
+            </motion.span>
           </motion.h1>
           <motion.div
             exit={{ opacity: 0, y: 20 }}
@@ -394,7 +387,7 @@ const Dashboard: NextPage = () => {
                       <p className='text-center text-sm sm:text-base text-neutral'>
                         Ceremony → Refreshments →{' '}
                         <span className='whitespace-nowrap'>
-                          Photos → Cake & Coffee{session.user.dinner && <span className='text-secondary'> → Dinner</span>}
+                          Cake & Coffee → Photos{session.user.dinner && <span className='text-secondary'> → Dinner</span>}
                         </span>{' '}
                       </p>
                     </div>
@@ -412,7 +405,7 @@ const Dashboard: NextPage = () => {
                     <input type='radio' name='info' />
                     <div className='collapse-title text-xl font-medium'>Dress Code</div>
                     <div className='collapse-content'>
-                      <p className='text-sm sm:text-base text-neutral'>Cocktail 🍸 (yes, ironic, we know.)</p>
+                      <p className='text-sm sm:text-base text-neutral'>Semi-formal/Cocktail 🍸</p>
                     </div>
                   </div>
                   {session.user.dinner && (
@@ -433,7 +426,57 @@ const Dashboard: NextPage = () => {
                     <div className='collapse-title text-xl font-medium'>Contact</div>
                     <div className='collapse-content'>
                       <p className='text-sm sm:text-base text-neutral'>
-                        Just DM one of us on face/book, insta/gram or dis/cord, or send us an email: us@korora.wedding
+                        Just DM one of us (
+                        <div className='tooltip' data-tip='josh'>
+                          <a
+                            className='link link-primary'
+                            href={process.env.NEXT_PUBLIC_FB_LINKS.split(' ')[0]}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                          >
+                            face
+                          </a>
+                        </div>
+                        •
+                        <div className='tooltip' data-tip='em'>
+                          <a
+                            className='link link-primary'
+                            href={process.env.NEXT_PUBLIC_FB_LINKS.split(' ')[1]}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                          >
+                            book
+                          </a>
+                        </div>{' '}
+                        or{' '}
+                        <div className='tooltip' data-tip='josh'>
+                          <a
+                            className='link link-primary'
+                            href={process.env.NEXT_PUBLIC_INSTA_LINKS.split(' ')[0]}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                          >
+                            insta
+                          </a>
+                        </div>
+                        •
+                        <div className='tooltip' data-tip='em'>
+                          <a
+                            className='link link-primary'
+                            href={process.env.NEXT_PUBLIC_INSTA_LINKS.split(' ')[1]}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                          >
+                            gram
+                          </a>
+                        </div>
+                        ), or{' '}
+                        <div className='tooltip' data-tip='us@korora.wedding'>
+                          <a className='link link-primary' href={'mailto:' + process.env.NEXT_PUBLIC_EMAIL} target='_blank' rel='noopener noreferrer'>
+                            email
+                          </a>
+                        </div>{' '}
+                        here.
                       </p>
                     </div>
                   </div>
