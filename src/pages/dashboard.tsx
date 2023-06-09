@@ -133,13 +133,13 @@ const Dashboard: NextPage = () => {
 
   if (status === 'authenticated') {
     return (
-      <div data-theme='green' className='flex min-w-[360px] overflow-x-hidden items-center font-body font-light text-neutral text-lg tracking-wide'>
-        <main className='flex flex-col items-center h-[calc(100dvh)] min-w-[360px] w-screen px-8 lg:my-0'>
+      <div data-theme='green' className='flex min-w-[360px] overflow-x-hidden font-body font-light text-neutral text-lg tracking-wide'>
+        <main className='flex flex-col items-center min-w-[360px] h-[calc(100dvh)] w-screen px-8 lg:my-0'>
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
-            className='mt-[2.25em] mb-10 font-display font-bold text-base hidden sm:block'
+            className='mt-9 mb-10 font-display font-bold text-base hidden sm:block'
           >
             {countdown}
           </motion.div>
@@ -147,7 +147,7 @@ const Dashboard: NextPage = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
-            className='mt-[1.75em] mb-10 font-display font-bold text-base block sm:hidden'
+            className='mt-7 mb-10 font-display font-bold text-base block sm:hidden'
           >
             {smallCountdown}
           </motion.div>
@@ -198,7 +198,7 @@ const Dashboard: NextPage = () => {
             variants={dashboardText}
             initial='hidden'
             animate='visible'
-            className='justify-center text-justify max-w-[85vw] min-w-[300px] font-heading font-light tracking-wide text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-4'
+            className='justify-center mx-[-100%] max-w-[85vw] min-w-[300px] font-heading font-light tracking-wide text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-4'
           >
             {'Hi, '.split('').map((char, index) => {
               return (
@@ -238,7 +238,7 @@ const Dashboard: NextPage = () => {
               <li>
                 <a
                   data-tip='Map'
-                  className={'tooltip tooltip-primary' + (openTab === 1 && ' active hover:bg-neutral')}
+                  className={'sm:tooltip tooltip-primary' + (openTab === 1 && ' active hover:bg-neutral')}
                   onClick={(e) => {
                     e.preventDefault()
                     setOpenTab(1)
@@ -255,7 +255,7 @@ const Dashboard: NextPage = () => {
               <li>
                 <a
                   data-tip='Info'
-                  className={'tooltip tooltip-primary' + (openTab === 2 && ' active hover:bg-neutral')}
+                  className={'sm:tooltip tooltip-primary' + (openTab === 2 && ' active hover:bg-neutral')}
                   onClick={(e) => {
                     e.preventDefault()
                     setOpenTab(2)
@@ -272,7 +272,7 @@ const Dashboard: NextPage = () => {
               <li>
                 <a
                   data-tip='RSVP'
-                  className={'tooltip tooltip-primary' + (openTab === 3 && ' active hover:bg-neutral')}
+                  className={'sm:tooltip tooltip-primary' + (openTab === 3 && ' active hover:bg-neutral')}
                   onClick={(e) => {
                     e.preventDefault()
                     setOpenTab(3)
@@ -288,7 +288,8 @@ const Dashboard: NextPage = () => {
               </li>
               <li>
                 <a
-                  className={'tooltip tooltip-primary' + (openTab === 4 && ' active hover:bg-neutral')}
+                  data-tip='Gifts'
+                  className={'sm:tooltip tooltip-primary' + (openTab === 4 && ' active hover:bg-neutral')}
                   onClick={(e) => {
                     e.preventDefault()
                     setOpenTab(4)
@@ -305,7 +306,7 @@ const Dashboard: NextPage = () => {
               <li>
                 <a
                   data-tip='Us?'
-                  className={'tooltip tooltip-primary' + (openTab === 5 && ' active hover:bg-neutral')}
+                  className={'sm:tooltip tooltip-primary' + (openTab === 5 && ' active hover:bg-neutral')}
                   onClick={(e) => {
                     e.preventDefault()
                     setOpenTab(5)
@@ -321,169 +322,176 @@ const Dashboard: NextPage = () => {
               </li>
             </ul>
           </motion.div>
-          {openTab === 1 && (
-            <motion.div
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className='flex flex-col max-w-[700px] w-[85vw] min-w-[294px] min-h-[25em] mb-20 bg-base-200 text-accent rounded-2xl xl-shadow transition-all-2'
-            >
-              <Map
-                ref={mapRef}
-                reuseMaps
-                mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-                mapLib={import('mapbox-gl')}
-                initialViewState={{
-                  latitude: parseFloat(process.env.NEXT_PUBLIC_COUNTRY_COORDS.split(',')[0]),
-                  longitude: parseFloat(process.env.NEXT_PUBLIC_COUNTRY_COORDS.split(',')[1]),
-                  zoom: 3.5,
-                }}
-                style={{ display: 'flex', flex: 1, alignContent: 'right', borderTopLeftRadius: '1rem', borderTopRightRadius: '1rem' }}
-                mapStyle='mapbox://styles/spren/clikciyg5000001q447fchmm7'
-                dragRotate={false}
-                touchPitch={false}
+          <div className='pb-9'>
+            {openTab === 1 && (
+              <motion.div
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className='flex flex-col max-w-[700px] w-[85vw] min-w-[296px] min-h-[25em] bg-base-200 text-accent rounded-2xl xl-shadow'
               >
-                <Marker
-                  color='#31553d'
-                  latitude={parseFloat(process.env.NEXT_PUBLIC_MARKER_COORDS.split(',')[0])}
-                  longitude={parseFloat(process.env.NEXT_PUBLIC_MARKER_COORDS.split(',')[1])}
-                  anchor='bottom'
-                ></Marker>
-                <label className='btn btn-circle absolute top-0 right-0 m-2 btn-neutral swap swap-rotate'>
-                  <input type='checkbox' onChange={handleZoom} />
-                  <svg className='swap-off fill-current w-5' xmlns='http://www.w3.org/2000/svg' height='40' viewBox='0 -960 960 960' width='40'>
-                    <path d='M147.333-100 100-147.333l139.334-139.334H120v-66.666h233.333V-120h-66.666v-119.334L147.333-100Zm665.334 0L673.333-239.334V-120h-66.666v-233.333H840v66.666H720.666L860-147.333 812.667-100ZM120-606.667v-66.666h119.334L100-812.667 147.333-860l139.334 139.334V-840h66.666v233.333H120Zm486.667 0V-840h66.666v119.334l140.001-140.001 47.333 47.333-140.001 140.001H840v66.666H606.667Z' />
-                  </svg>
-                  <svg className='swap-on fill-current w-5' xmlns='http://www.w3.org/2000/svg' height='40' viewBox='0 -960 960 960' width='40'>
-                    <path d='M120-120v-233.333h66.666v119.334L326.667-374 374-326.667 233.999-186.666h119.334V-120H120Zm486.667 0v-66.666h119.334L586.667-326 634-373.333l139.334 139.334v-119.334H840V-120H606.667ZM326-586.667 186.666-726.001v119.334H120V-840h233.333v66.666H233.999L373.333-634 326-586.667Zm308 0L586.667-634l139.334-139.334H606.667V-840H840v233.333h-66.666v-119.334L634-586.667Z' />
-                  </svg>
-                </label>
-              </Map>
-              <div>
-                <h2 className='mx-5 pt-5 justify-center font-medium text-xl text-center tracking-wide'>
-                  {process.env.NEXT_PUBLIC_VENUE.toLowerCase()}
-                  <span className='hidden sm:inline'> • </span>
-                  <br className='sm:hidden'></br>
-                  {process.env.NEXT_PUBLIC_LOCATION.toLowerCase()}
-                </h2>
-                <p className='mx-5 mb-5 justify-center font-medium text-xl text-center tracking-wide'>
-                  {formattedDayNum}
-                  <sup>Þ </sup>
-                  {formattedDate}
-                  <span className='hidden sm:inline'> • </span>
-                  <br className='sm:hidden' />
-                  {formattedDay + ' ' + formattedTime}
-                </p>
-              </div>
-            </motion.div>
-          )}
-          {openTab === 2 && (
-            <motion.div
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className='flex flex-col max-w-[700px] w-[85vw] min-w-[294px] min-h-[25em] mb-20 bg-base-200 text-accent rounded-2xl xl-shadow transition-all-2'
-            ></motion.div>
-          )}
-          {openTab === 3 && (
-            <motion.div
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className='flex flex-col max-w-[700px] w-[85vw] min-w-[294px] min-h-[25em] mb-20 bg-base-200 text-accent rounded-2xl xl-shadow transition-all-2'
-            ></motion.div>
-          )}
-          {openTab === 4 && (
-            <motion.div
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className='flex flex-col max-w-[700px] w-[85vw] min-w-[294px] min-h-[25em] mb-20 bg-base-200 text-accent rounded-2xl xl-shadow transition-all-2'
-            ></motion.div>
-          )}
-          {openTab === 5 && (
-            <motion.div
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className='flex relative flex-col max-w-[700px] w-[85vw] min-w-[294px] min-h-[25em] max-h-[450px] mb-20 bg-base-200 text-accent rounded-2xl xl-shadow transition-all-2'
-            >
-              <div className='flex overflow-hidden bg-neutral center-items rounded-[1rem]' ref={emblaRef}>
-                <div className='flex'>
-                  {slides.map((image, index) => (
-                    <div className='flex-[0_0_100%]' key={index}>
-                      <Image src={image} className='rounded-[1rem] object-contain w-full h-full' placeholder='blur' alt={''} sizes='85vw' />
-                    </div>
-                  ))}
+                <Map
+                  ref={mapRef}
+                  reuseMaps
+                  mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+                  mapLib={import('mapbox-gl')}
+                  initialViewState={{
+                    latitude: parseFloat(process.env.NEXT_PUBLIC_COUNTRY_COORDS.split(',')[0]),
+                    longitude: parseFloat(process.env.NEXT_PUBLIC_COUNTRY_COORDS.split(',')[1]),
+                    zoom: 3.5,
+                  }}
+                  style={{ display: 'flex', flex: 1, alignContent: 'right', borderTopLeftRadius: '1rem', borderTopRightRadius: '1rem' }}
+                  mapStyle='mapbox://styles/spren/clikciyg5000001q447fchmm7'
+                  dragRotate={false}
+                  touchPitch={false}
+                >
+                  <Marker
+                    color='#31553d'
+                    latitude={parseFloat(process.env.NEXT_PUBLIC_MARKER_COORDS.split(',')[0])}
+                    longitude={parseFloat(process.env.NEXT_PUBLIC_MARKER_COORDS.split(',')[1])}
+                    anchor='bottom'
+                  ></Marker>
+                  <label className='btn btn-circle absolute top-0 right-0 m-2 btn-neutral swap swap-rotate'>
+                    <input type='checkbox' onChange={handleZoom} />
+                    <svg className='swap-off fill-current w-5' xmlns='http://www.w3.org/2000/svg' height='40' viewBox='0 -960 960 960' width='40'>
+                      <path d='M147.333-100 100-147.333l139.334-139.334H120v-66.666h233.333V-120h-66.666v-119.334L147.333-100Zm665.334 0L673.333-239.334V-120h-66.666v-233.333H840v66.666H720.666L860-147.333 812.667-100ZM120-606.667v-66.666h119.334L100-812.667 147.333-860l139.334 139.334V-840h66.666v233.333H120Zm486.667 0V-840h66.666v119.334l140.001-140.001 47.333 47.333-140.001 140.001H840v66.666H606.667Z' />
+                    </svg>
+                    <svg className='swap-on fill-current w-5' xmlns='http://www.w3.org/2000/svg' height='40' viewBox='0 -960 960 960' width='40'>
+                      <path d='M120-120v-233.333h66.666v119.334L326.667-374 374-326.667 233.999-186.666h119.334V-120H120Zm486.667 0v-66.666h119.334L586.667-326 634-373.333l139.334 139.334v-119.334H840V-120H606.667ZM326-586.667 186.666-726.001v119.334H120V-840h233.333v66.666H233.999L373.333-634 326-586.667Zm308 0L586.667-634l139.334-139.334H606.667V-840H840v233.333h-66.666v-119.334L634-586.667Z' />
+                    </svg>
+                  </label>
+                </Map>
+                <div>
+                  <h2 className='mx-5 pt-5 justify-center font-medium text-xl text-center tracking-wide'>
+                    {process.env.NEXT_PUBLIC_VENUE.toLowerCase()}
+                    <span className='hidden sm:inline'> • </span>
+                    <br className='sm:hidden'></br>
+                    {process.env.NEXT_PUBLIC_LOCATION.toLowerCase()}
+                  </h2>
+                  <p className='mx-5 mb-5 justify-center font-medium text-xl text-center tracking-wide'>
+                    {formattedDayNum}
+                    <sup>Þ </sup>
+                    {formattedDate}
+                    <span className='hidden sm:inline'> • </span>
+                    <br className='sm:hidden' />
+                    {formattedDay + ' ' + formattedTime}
+                  </p>
                 </div>
-              </div>
-              <dialog id='modal' className='modal bg-black'>
-                <form method='dialog' className='flex flex-col items-center justify-center h-screen w-screen'>
-                  <div className={'flex overflow-hidden bg-black center-items'} ref={emblaModalRef}>
-                    <div className='flex'>
-                      {slides.map((image, index) => (
-                        <div className='flex-[0_0_100%]' key={index}>
-                          <Image src={image} className='rounded-[1rem] object-contain w-full h-full' placeholder='blur' alt={''} sizes='85vw' />
-                        </div>
-                      ))}
-                    </div>
+              </motion.div>
+            )}
+            {openTab === 2 && (
+              <motion.div
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className='flex flex-col max-w-[700px] w-[85vw] min-w-[296px] min-h-[25em] bg-base-200 text-accent rounded-2xl xl-shadow'
+              ></motion.div>
+            )}
+            {openTab === 3 && (
+              <motion.div
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className='flex flex-col max-w-[700px] w-[85vw] min-w-[296px] min-h-[25em] bg-base-200 text-accent rounded-2xl xl-shadow'
+              ></motion.div>
+            )}
+            {openTab === 4 && (
+              <motion.div
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className='flex flex-col max-w-[700px] w-[85vw] min-w-[296px] min-h-[25em] bg-base-200 text-accent rounded-2xl xl-shadow'
+              ></motion.div>
+            )}
+            {openTab === 5 && (
+              <motion.div
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className='flex flex-col max-w-[700px] w-[85vw] min-w-[296px] min-h-[25em] max-h-[450px] bg-base-200 text-accent rounded-2xl xl-shadow'
+              >
+                <div className='flex overflow-hidden bg-neutral center-items rounded-2xl' ref={emblaRef}>
+                  <div className='flex'>
+                    {slides.map((image, index) => (
+                      <div className='flex-[0_0_100%]' key={index}>
+                        <Image src={image} className='rounded-2xl object-contain w-full h-full' placeholder='blur' alt={''} sizes='85vw' />
+                      </div>
+                    ))}
                   </div>
-                  <div className='fixed bottom-10 flex'>
-                    <div className='btn btn-square btn-sm bg-base-100 mx-1' onClick={scrollPrevModal}>
-                      <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='currentColor' viewBox='0 -960 960 960'>
-                        <path xmlns='http://www.w3.org/2000/svg' d='M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z' />
-                      </svg>
+                </div>
+                <dialog id='modal' className='modal bg-black'>
+                  <form method='dialog' className='flex flex-col items-center justify-center h-screen w-screen'>
+                    <div className={'flex overflow-hidden bg-black center-items'} ref={emblaModalRef}>
+                      <div className='flex'>
+                        {slides.map((image, index) => (
+                          <div className='flex-[0_0_100%]' key={index}>
+                            <Image src={image} className='rounded-2xl object-contain w-full h-full' placeholder='blur' alt={''} sizes='85vw' />
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                    <button className='btn btn-square btn-sm bg-base-100 mx-1'>
-                      <svg xmlns='http://www.w3.org/2000/svg' className='h-4 w-4' fill='currentColor' viewBox='0 -960 960 960'>
-                        <path d='M147.333-100 100-147.333l139.334-139.334H120v-66.666h233.333V-120h-66.666v-119.334L147.333-100Zm665.334 0L673.333-239.334V-120h-66.666v-233.333H840v66.666H720.666L860-147.333 812.667-100ZM120-606.667v-66.666h119.334L100-812.667 147.333-860l139.334 139.334V-840h66.666v233.333H120Zm486.667 0V-840h66.666v119.334l140.001-140.001 47.333 47.333-140.001 140.001H840v66.666H606.667Z' />
-                      </svg>
-                    </button>
-                    <div className='btn btn-square btn-sm bg-base-100 mx-1' onClick={scrollNextModal}>
-                      <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='currentColor' viewBox='0 -960 960 960'>
-                        <path xmlns='http://www.w3.org/2000/svg' d='m376-240-56-56 184-184-184-184 56-56 240 240-240 240Z' />
-                      </svg>
+                    <div className='fixed bottom-10 flex'>
+                      <div className='btn btn-square btn-sm bg-base-100 mx-1' onClick={scrollPrevModal}>
+                        <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='currentColor' viewBox='0 -960 960 960'>
+                          <path xmlns='http://www.w3.org/2000/svg' d='M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z' />
+                        </svg>
+                      </div>
+                      <button className='btn btn-square btn-sm bg-base-100 mx-1'>
+                        <svg xmlns='http://www.w3.org/2000/svg' className='h-4 w-4' fill='currentColor' viewBox='0 -960 960 960'>
+                          <path d='M147.333-100 100-147.333l139.334-139.334H120v-66.666h233.333V-120h-66.666v-119.334L147.333-100Zm665.334 0L673.333-239.334V-120h-66.666v-233.333H840v66.666H720.666L860-147.333 812.667-100ZM120-606.667v-66.666h119.334L100-812.667 147.333-860l139.334 139.334V-840h66.666v233.333H120Zm486.667 0V-840h66.666v119.334l140.001-140.001 47.333 47.333-140.001 140.001H840v66.666H606.667Z' />
+                        </svg>
+                      </button>
+                      <div className='btn btn-square btn-sm bg-base-100 mx-1' onClick={scrollNextModal}>
+                        <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='currentColor' viewBox='0 -960 960 960'>
+                          <path xmlns='http://www.w3.org/2000/svg' d='m376-240-56-56 184-184-184-184 56-56 240 240-240 240Z' />
+                        </svg>
+                      </div>
                     </div>
-                  </div>
-                </form>
-              </dialog>
-              <div className='flex justify-center items-center p-2'>
-                <button className='btn btn-square btn-sm bg-base-100 mx-1' onClick={scrollPrev}>
-                  <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='currentColor' viewBox='0 -960 960 960'>
-                    <path xmlns='http://www.w3.org/2000/svg' d='M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z' />
-                  </svg>
-                </button>
-                <button className='btn btn-square btn-sm bg-base-100 mx-1' onClick={() => window.modal.showModal()}>
-                  <svg xmlns='http://www.w3.org/2000/svg' className='h-4 w-4' fill='currentColor' viewBox='0 -960 960 960'>
-                    <path d='M120-120v-233.333h66.666v119.334L326.667-374 374-326.667 233.999-186.666h119.334V-120H120Zm486.667 0v-66.666h119.334L586.667-326 634-373.333l139.334 139.334v-119.334H840V-120H606.667ZM326-586.667 186.666-726.001v119.334H120V-840h233.333v66.666H233.999L373.333-634 326-586.667Zm308 0L586.667-634l139.334-139.334H606.667V-840H840v233.333h-66.666v-119.334L634-586.667Z' />
-                  </svg>
-                </button>
-                <button className='btn btn-square btn-sm bg-base-100 mx-1' onClick={scrollNext}>
-                  <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='currentColor' viewBox='0 -960 960 960'>
-                    <path xmlns='http://www.w3.org/2000/svg' d='m376-240-56-56 184-184-184-184 56-56 240 240-240 240Z' />
-                  </svg>
-                </button>
-              </div>
-            </motion.div>
-          )}
+                  </form>
+                </dialog>
+                <div className='flex justify-center items-center p-2'>
+                  <button className='btn btn-square btn-sm bg-base-100 mx-1' onClick={scrollPrev}>
+                    <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='currentColor' viewBox='0 -960 960 960'>
+                      <path xmlns='http://www.w3.org/2000/svg' d='M560-240 320-480l240-240 56 56-184 184 184 184-56 56Z' />
+                    </svg>
+                  </button>
+                  <button className='btn btn-square btn-sm bg-base-100 mx-1' onClick={() => window.modal.showModal()}>
+                    <svg xmlns='http://www.w3.org/2000/svg' className='h-4 w-4' fill='currentColor' viewBox='0 -960 960 960'>
+                      <path d='M120-120v-233.333h66.666v119.334L326.667-374 374-326.667 233.999-186.666h119.334V-120H120Zm486.667 0v-66.666h119.334L586.667-326 634-373.333l139.334 139.334v-119.334H840V-120H606.667ZM326-586.667 186.666-726.001v119.334H120V-840h233.333v66.666H233.999L373.333-634 326-586.667Zm308 0L586.667-634l139.334-139.334H606.667V-840H840v233.333h-66.666v-119.334L634-586.667Z' />
+                    </svg>
+                  </button>
+                  <button className='btn btn-square btn-sm bg-base-100 mx-1' onClick={scrollNext}>
+                    <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='currentColor' viewBox='0 -960 960 960'>
+                      <path xmlns='http://www.w3.org/2000/svg' d='m376-240-56-56 184-184-184-184 56-56 240 240-240 240Z' />
+                    </svg>
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </div>
         </main>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1 }}
-          className='navbar fixed top-0 px-6 py-4 sm:px-8 sm:py-6 font-display'
+          className='fixed top-0 pl-6 pt-4 sm:px-8 sm:py-6 font-display '
         >
-          <div className='flex-1'>
-            <button
-              className='btn text-xs w-[100px] sm:text-sm sm:w-[110px] bg-opacity-80'
-              onClick={() => {
-                setLoading(true)
-                signOut()
-              }}
-            >
-              {loading ? <span className='loading loading-infinity' /> : 'Log Out'}
-            </button>
-          </div>
+          <button
+            className='btn text-xs w-[100px] sm:text-sm sm:w-[110px] bg-opacity-80'
+            onClick={() => {
+              setLoading(true)
+              signOut()
+            }}
+          >
+            {loading ? <span className='loading loading-infinity' /> : 'Log Out'}
+          </button>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1 }}
+          className='fixed top-0 right-0 pr-6 pt-4 sm:px-8 sm:py-6 font-display'
+        >
           <div className='flex-none'>
             <button className='btn text-xs w-[100px] sm:text-sm sm:w-[110px] bg-opacity-80'>Confirm</button>
           </div>
