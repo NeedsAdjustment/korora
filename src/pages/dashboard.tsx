@@ -88,12 +88,7 @@ const Dashboard: NextPage<any> = ({ rsvps, gifts }) => {
   })
   rsvp = rsvp.filter((item) => item !== undefined)[0]
 
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<IRSVP>({
+  const { register, handleSubmit, reset } = useForm<IRSVP>({
     resolver: zodResolver(rsvpSchema),
   })
 
@@ -109,7 +104,6 @@ const Dashboard: NextPage<any> = ({ rsvps, gifts }) => {
       setRSVPed(true)
       setFieldsDisabled(true)
     } else if (rsvp?.RSVP === true || rsvp?.RSVP === false) {
-      console.log(rsvp?.RSVP)
       reset({
         firstName: session?.user?.firstName,
         lastName: session?.user?.lastName,

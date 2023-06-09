@@ -1,9 +1,7 @@
 import { prisma } from '../../prisma'
 
 export default async (req, res) => {
-  console.log(req.body)
   const { firstName, lastName, RSVP, RSVPOthersYes, RSVPOthersNo, RSVPDate } = req.body
-  console.log(RSVP)
   try {
     const updateRSVP = await prisma.user.update({
       where: {
