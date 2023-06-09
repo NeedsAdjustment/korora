@@ -32,6 +32,8 @@ export default NextAuth({
         return {
           firstName: user.firstName,
           lastName: user.lastName,
+          dinner: user.dinner,
+          bridalParty: user.bridalParty,
         }
       },
     }),
@@ -49,12 +51,14 @@ export default NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.name = user.firstName + ' ' + user.lastName
+        token.dinner = user.dinner
       }
       return token
     },
-    async session({ session, token }) {
+    async session({ session, token, user }) {
       if (token) {
         session.user.name = token.name
+        session.user.dinner = token.dinner as boolean
       }
       return session
     },

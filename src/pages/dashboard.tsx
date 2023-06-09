@@ -384,8 +384,61 @@ const Dashboard: NextPage = () => {
                 layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className='flex flex-col max-w-[700px] w-[85vw] min-w-[296px] min-h-[25em] bg-base-200 text-accent rounded-2xl xl-shadow'
-              ></motion.div>
+                className='flex flex-col max-w-[700px] w-[85vw] min-w-[296px] bg-base-200 text-accent rounded-2xl xl-shadow'
+              >
+                <div className='join join-vertical w-full'>
+                  <div className='collapse collapse-arrow join-item border border-base-100'>
+                    <input type='radio' name='info' defaultChecked />
+                    <div className='collapse-title text-xl font-medium'>Format</div>
+                    <div className='collapse-content'>
+                      <p className='text-center text-sm sm:text-base text-neutral'>
+                        Ceremony → Refreshments →{' '}
+                        <span className='whitespace-nowrap'>
+                          Photos → Cake & Coffee{session.user.dinner && <span className='text-secondary'> → Dinner</span>}
+                        </span>{' '}
+                      </p>
+                    </div>
+                  </div>
+                  <div className='collapse collapse-arrow join-item border border-base-100'>
+                    <input type='radio' name='info' />
+                    <div className='collapse-title text-xl font-medium'>Alcohol</div>
+                    <div className='collapse-content'>
+                      <p className='text-sm sm:text-base text-neutral'>
+                        We're having a dry wedding! Non-alcoholic refreshments will be available after the ceremony.
+                      </p>
+                    </div>
+                  </div>
+                  <div className='collapse collapse-arrow join-item border border-base-100'>
+                    <input type='radio' name='info' />
+                    <div className='collapse-title text-xl font-medium'>Dress Code</div>
+                    <div className='collapse-content'>
+                      <p className='text-sm sm:text-base text-neutral'>Cocktail 🍸 (yes, ironic, we know.)</p>
+                    </div>
+                  </div>
+                  {session.user.dinner && (
+                    <div className='collapse collapse-arrow join-item border border-base-100'>
+                      <input type='radio' name='info' />
+                      <div className='collapse-title text-xl font-medium text-secondary'>Dinner</div>
+                      <div className='collapse-content'>
+                        <p className='text-center md:text-left text-sm sm:text-base text-neutral'>
+                          You're invited to our exclusive <span className='whitespace-nowrap'>family-&-friends reception dinner!</span>
+                          <br />
+                          <b>6:30pm in The Barn @ Pohangina Heights</b>
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                  <div className='collapse collapse-arrow join-item border border-base-100'>
+                    <input type='radio' name='info' />
+                    <div className='collapse-title text-xl font-medium'>Contact</div>
+                    <div className='collapse-content'>
+                      <p className='text-sm sm:text-base text-neutral'>
+                        Just DM one of us on face/book, insta/gram or dis/cord, or send us an email: us@korora.wedding
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             )}
             {openTab === 3 && (
               <motion.div
@@ -408,13 +461,13 @@ const Dashboard: NextPage = () => {
                 layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className='flex flex-col max-w-[700px] w-[85vw] min-w-[296px] min-h-[25em] max-h-[450px] bg-base-200 text-accent rounded-2xl xl-shadow'
+                className='flex flex-col max-w-[700px] w-[85vw] min-w-[296px] min-h-[28.6em] max-h-[450px] bg-base-200 text-accent rounded-2xl xl-shadow'
               >
                 <div className='flex overflow-hidden bg-neutral center-items rounded-2xl' ref={emblaRef}>
                   <div className='flex'>
                     {slides.map((image, index) => (
                       <div className='flex-[0_0_100%]' key={index}>
-                        <Image src={image} className='rounded-2xl object-contain w-full h-full' placeholder='blur' alt={''} sizes='85vw' />
+                        <Image src={image} className='object-contain w-full h-full' placeholder='blur' alt={''} sizes='85vw' />
                       </div>
                     ))}
                   </div>
@@ -425,7 +478,7 @@ const Dashboard: NextPage = () => {
                       <div className='flex'>
                         {slides.map((image, index) => (
                           <div className='flex-[0_0_100%]' key={index}>
-                            <Image src={image} className='rounded-2xl object-contain w-full h-full' placeholder='blur' alt={''} sizes='85vw' />
+                            <Image src={image} className='object-contain w-full h-full' placeholder='blur' alt={''} sizes='85vw' />
                           </div>
                         ))}
                       </div>

@@ -14,13 +14,14 @@ model User {
   bridalParty   Boolean   @default(false)
   nzInvite      Boolean   @default(false)
   myInvite      Boolean   @default(false)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  dinner        Boolean   @default(false)
   gifts         Gift[]
   RSVP          Boolean?
   RSVPOthersYes String?
   RSVPOthersNo  String?
   RSVPDate      DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   @@unique(fields: [firstName, lastName], name: "fullName")
 }
