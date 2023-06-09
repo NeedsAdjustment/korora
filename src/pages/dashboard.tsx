@@ -198,7 +198,7 @@ const Dashboard: NextPage = () => {
             variants={dashboardText}
             initial='hidden'
             animate='visible'
-            className='justify-center mx-[-100%] max-w-[85vw] min-w-[300px] font-heading font-light tracking-wide text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-4'
+            className='justify-center sm:text-center max-w-[85vw] min-w-[296px] font-heading font-light tracking-wide text-5xl sm:text-6xl md:text-7xl lg:text-8xl mb-4'
           >
             {'Hi, '.split('').map((char, index) => {
               return (
