@@ -95,15 +95,21 @@ const Dashboard: NextPage<any> = ({ rsvps, gifts }) => {
   const [rsvpLoading, setRSVPLoading] = useState(false)
   const [othersRSVP, setOthersRSVP] = useState(false)
   const [rsvped, setRSVPed] = useState(false)
+  const [rsvpStatus, setRSVPStatus] = useState(false)
+  const [othersYesFilled, setOthersYesFilled] = useState(false)
+  const [othersNoFilled, setOthersNoFilled] = useState(false)
   const [fieldsDisabled, setFieldsDisabled] = useState(false)
   const [rsvpSent, setRSVPSent] = useState(false)
 
   useEffect(() => {
     if (rsvpSent) {
-      setOthersRSVP(true)
+      if (!othersYesFilled && !othersNoFilled) {
+        setOthersRSVP(false)
+      }
       setRSVPed(true)
       setFieldsDisabled(true)
     } else if (rsvp?.RSVP === true || rsvp?.RSVP === false) {
+      setRSVPStatus(rsvp?.RSVP)
       reset({
         firstName: session?.user?.firstName,
         lastName: session?.user?.lastName,
@@ -481,7 +487,7 @@ const Dashboard: NextPage<any> = ({ rsvps, gifts }) => {
                     <div className='collapse-title text-xl font-medium'>Alcohol</div>
                     <div className='collapse-content'>
                       <p className='text-sm sm:text-base text-neutral'>
-                        We're having a dry wedding! Non-alcoholic refreshments will be available after the ceremony.
+                        We're having an alcohol-free wedding! Non-alcoholic refreshments will be available after the ceremony.
                       </p>
                     </div>
                   </div>
@@ -574,10 +580,21 @@ const Dashboard: NextPage<any> = ({ rsvps, gifts }) => {
                 animate={{ opacity: 1, y: 0 }}
                 className='flex flex-col max-w-[700px] w-[85vw] min-w-[296px] py-8 bg-base-200 text-accent rounded-2xl xl-shadow'
               >
-                <p className={'mx-5 mb-5 justify-center font-medium text-xl text-center tracking-wide' + (fieldsDisabled ? '' : ' hidden')}>
-                  Thank you for RSVPing!
+                <p
+                  className={
+                    'mx-5 mb-5 justify-center font-medium text-xl text-center tracking-wide' +
+                    (fieldsDisabled ? (!rsvp?.RSVPOthersYes && !rsvp?.RSVPOthersNo ? ' mb-0' : '') : ' hidden')
+                  }
+                >
+                  {rsvpStatus ? 'Thank you for RSVPing!' : 'Thank you for letting us know!'}
                 </p>
-                <form onSubmit={handleSubmit(onSubmit)} autoComplete='false' className='flex flex-1 items-center justify-center'>
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  autoComplete='false'
+                  className={
+                    'flex flex-1 items-center justify-center' + (fieldsDisabled && !rsvp?.RSVPOthersYes && !rsvp?.RSVPOthersNo ? ' hidden' : '')
+                  }
+                >
                   <motion.div layout className='form-control'>
                     <input {...register('firstName')} type='hidden' />
                     <input {...register('lastName')} type='hidden' />
@@ -585,7 +602,9 @@ const Dashboard: NextPage<any> = ({ rsvps, gifts }) => {
                       <p>1.</p>
                       <select
                         {...register('RSVP')}
-                        onChange={() => setRSVPed(true)}
+                        onChange={(e) => {
+                          setRSVPed(true), setRSVPStatus(e.target.value === 'true')
+                        }}
                         className='select select-bordered md:select-lg flex-grow'
                         disabled={fieldsDisabled}
                       >
@@ -609,25 +628,45 @@ const Dashboard: NextPage<any> = ({ rsvps, gifts }) => {
                             disabled={fieldsDisabled}
                           />
                         </div>
-                        <div className={'flex flex-row items-center gap-2 sm:gap-3 mb-3' + (othersRSVP ? '' : ' hidden')}>
-                          <p>a.</p>
+                        <div
+                          className={
+                            'flex flex-row items-center gap-2 sm:gap-3 mb-3' +
+                            (othersRSVP ? '' : ' hidden') +
+                            (fieldsDisabled && !rsvp?.RSVPOthersYes ? ' hidden' : '')
+                          }
+                        >
+                          <p>✓</p>
                           <input
                             {...register('RSVPOthersYes')}
                             className={'input input-bordered md:input-lg flex-grow' + (othersRSVP ? '' : ' hidden')}
                             type='text'
                             placeholder='Who is attending?'
                             defaultValue={rsvp.RSVPOthersYes === null ? '' : rsvp.RSVPOthersYes}
+                            onChange={(e) => {
+                              if (e.target.value !== '') setOthersYesFilled(true)
+                              else setOthersYesFilled(false)
+                            }}
                             disabled={fieldsDisabled}
                           />
                         </div>
-                        <div className={'flex flex-row items-center gap-2 sm:gap-3 mb-3' + (othersRSVP ? '' : ' hidden')}>
-                          <p>b.</p>
+                        <div
+                          className={
+                            'flex flex-row items-center gap-2 sm:gap-3 mb-3' +
+                            (othersRSVP ? '' : ' hidden') +
+                            (fieldsDisabled && !rsvp?.RSVPOthersNo ? ' hidden' : '')
+                          }
+                        >
+                          <p>✗</p>
                           <input
                             {...register('RSVPOthersNo')}
                             className='input input-bordered md:input-lg flex-grow'
                             type='text'
                             placeholder='Who is not attending?'
                             defaultValue={rsvp.RSVPOthersNo === null ? '' : rsvp.RSVPOthersNo}
+                            onChange={(e) => {
+                              if (e.target.value !== '') setOthersNoFilled(true)
+                              else setOthersNoFilled(false)
+                            }}
                             disabled={fieldsDisabled}
                           />
                         </div>
