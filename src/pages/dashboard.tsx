@@ -244,7 +244,7 @@ const Dashboard: NextPage<any> = ({ rsvps, gifts }) => {
             >
               <Image className='w-full max-w-[13em]' priority src={Penguins} alt='Penguins' />
             </motion.div>
-            <motion.svg className='max-h-[20em]' viewBox='0 0 2778 1400' xmlns='http://www.w3.org/2000/svg'>
+            <motion.svg className='max-h-[20em] w-full' viewBox='0 0 2778 1400' xmlns='http://www.w3.org/2000/svg'>
               <motion.path
                 initial={{ pathLength: 0 }}
                 animate={{ pathLength: 1 }}
