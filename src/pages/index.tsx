@@ -11,7 +11,7 @@ import { motion } from 'framer-motion'
 import { loginText, letter } from '@/utils/motionText'
 
 const Home: NextPage = () => {
-  const { register, handleSubmit, setFocus } = useForm<ILogin>({
+  const { register, handleSubmit } = useForm<ILogin>({
     resolver: zodResolver(loginSchema),
   })
   const [wrong, setWrong] = useState(false)
@@ -43,12 +43,7 @@ const Home: NextPage = () => {
   }, [])
 
   const handleChange = async (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === ' ') {
-      e.preventDefault()
-      setFocus('lastName')
-    } else if (/[^a-zA-Z]+$/.test(e.key)) {
-      e.preventDefault()
-    }
+    if (/[^a-zA-Z]+$/.test(e.key) && e.key !== '-' && e.key !== ' ') e.preventDefault()
   }
 
   if (status === 'unauthenticated') {
