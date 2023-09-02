@@ -493,6 +493,15 @@ const Dashboard: NextPage<any> = ({ rsvps, gifts }) => {
                   </div>
                   <div className='collapse collapse-arrow join-item border border-base-100'>
                     <input type='radio' name='info' />
+                    <div className='collapse-title text-xl font-medium'>Children</div>
+                    <div className='collapse-content'>
+                      <p className='text-sm sm:text-base text-neutral'>
+                        Unfortunately, due to guest number restrictions, we are only able to extend this invite to the children of close family.
+                      </p>
+                    </div>
+                  </div>
+                  <div className='collapse collapse-arrow join-item border border-base-100'>
+                    <input type='radio' name='info' />
                     <div className='collapse-title text-xl font-medium'>Dress Code</div>
                     <div className='collapse-content'>
                       <p className='text-sm sm:text-base text-neutral'>Semi-formal/Cocktail 🍸</p>
@@ -506,7 +515,9 @@ const Dashboard: NextPage<any> = ({ rsvps, gifts }) => {
                         <p className='text-center md:text-left text-sm sm:text-base text-neutral'>
                           You're invited to our exclusive <span className='whitespace-nowrap'>family-&-friends reception dinner!</span>
                           <br />
-                          <b>6:30pm in The Barn @ Pohangina Heights</b>
+                          <b>6:30pm in The Barn @ {process.env.NEXT_PUBLIC_VENUE}</b>
+                          <br />
+                          Please let us know if you have any dietary requirements.
                         </p>
                       </div>
                     </div>
@@ -689,9 +700,33 @@ const Dashboard: NextPage<any> = ({ rsvps, gifts }) => {
                 layout
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className='flex justify-center items-center max-w-[700px] w-[85vw] min-w-[296px] min-h-[25em] bg-base-200 text-accent rounded-2xl xl-shadow'
+                className='flex justify-center items-center max-w-[700px] w-[85vw] min-w-[296px] bg-base-200 text-accent rounded-2xl xl-shadow'
               >
-                <p className='font-medium text-xl text-center tracking-wide'>gift registry coming soon</p>
+                <div className='font-medium text-xl text-center tracking-wide p-10'>
+                  <span className='text-neutral'>Your presence at our wedding is more than enough!</span>
+                  <br />
+                  <br />
+                  If you'd like to help us celebrate with a <span className='text-secondary'>gift</span>, we've set up a few{' '}
+                  <span className='text-secondary'>funds</span> to help us get started in our new life together:
+                  <div className='flex flex-col place-items-center py-10 md:flex-row'>
+                    <div className='grid h-32 min-w-[60%] w-64 card bg-base-300 rounded-box place-items-center md:flex-1 md:min-w-0'>
+                      <p className='text-neutral h-1'>home & living</p>
+                      <p className='text-sm'>
+                        {process.env.NEXT_PUBLIC_FUND}-<span className='text-secondary'>003</span> <br />
+                        Joshua Soong
+                      </p>
+                    </div>
+                    <div className='divider before:bg-accent after:bg-accent md:divider-horizontal' />
+                    <div className='grid h-32 min-w-[60%] w-64 card bg-base-300 rounded-box place-items-center md:flex-1 md:min-w-0'>
+                      <p className='text-neutral h-1'>honeymoon</p>
+                      <p className='text-sm'>
+                        {process.env.NEXT_PUBLIC_FUND}-<span className='text-secondary'>004</span> <br />
+                        Joshua Soong
+                      </p>
+                    </div>
+                  </div>
+                  We'll also have a wishing well and table set up at the wedding if you'd like to give us a card or gift in person.
+                </div>
               </motion.div>
             )}
             {openTab === 5 && (
