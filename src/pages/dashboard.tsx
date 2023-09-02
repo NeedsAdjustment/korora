@@ -706,8 +706,7 @@ const Dashboard: NextPage<any> = ({ rsvps, gifts }) => {
                   <span className='text-neutral'>Your presence at our wedding is more than enough!</span>
                   <br />
                   <br />
-                  If you'd like to help us celebrate with a <span className='text-secondary'>gift</span>, we've set up a few{' '}
-                  <span className='text-secondary'>funds</span> to help us get started in our new life together:
+                  If you'd like to help us celebrate with a gift, we've set up a few funds to help us get started in our new life together:
                   <div className='flex flex-col place-items-center py-10 md:flex-row'>
                     <div className='grid h-32 min-w-[60%] w-64 card bg-base-300 rounded-box place-items-center md:flex-1 md:min-w-0'>
                       <p className='text-neutral h-1'>home & living</p>
@@ -725,7 +724,8 @@ const Dashboard: NextPage<any> = ({ rsvps, gifts }) => {
                       </p>
                     </div>
                   </div>
-                  We'll also have a wishing well and table set up at the wedding if you'd like to give us a card or gift in person.
+                  We'll also have a <span className='text-secondary'>wishing well</span> and table set up at the wedding if you'd like to give us a
+                  card or gift in person.
                 </div>
               </motion.div>
             )}
