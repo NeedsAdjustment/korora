@@ -1,0 +1,288 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Ogg";
+  src: url("/fonts/Ogg Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Ogg";
+  src: url("/fonts/Ogg Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Styrene A";
+  src: url("/fonts/StyreneALC-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Styrene A";
+  src: url("/fonts/StyreneALC-BoldItalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Styrene A";
+  src: url("/fonts/StyreneALC-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Styrene A";
+  src: url("/fonts/StyreneALC-MediumItalic.otf") format("opentype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Styrene A";
+  src: url("/fonts/StyreneALC-Thin.otf") format("opentype");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Styrene A";
+  src: url("/fonts/StyreneALC-ThinItalic.otf") format("opentype");
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Styrene B";
+  src: url("/fonts/StyreneBLC-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Styrene B";
+  src: url("/fonts/StyreneBLC-BoldItalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Styrene B";
+  src: url("/fonts/StyreneBLC-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Styrene B";
+  src: url("/fonts/StyreneBLC-RegularItalic.otf") format("opentype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Styrene B";
+  src: url("/fonts/StyreneBLC-Light.otf") format("opentype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Styrene B";
+  src: url("/fonts/StyreneBLC-LightItalic.otf") format("opentype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@theme {
+  --font-heading: "Ogg", ui-serif, Georgia, serif;
+  --font-display: "Styrene A", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Styrene B", ui-sans-serif, system-ui, sans-serif;
+  --breakpoint-sm: 530px;
+  --breakpoint-md: 785px;
+  --breakpoint-lg: 1200px;
+}
+
+@plugin "daisyui" {
+  themes: false;
+}
+
+@plugin "daisyui/theme" {
+  name: "green";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: hsl(140 27% 26%);
+  --color-base-200: hsl(140 27% 19%);
+  --color-base-300: hsl(140 27% 12%);
+  --color-base-content: hsl(135 10% 84%);
+
+  --color-primary: hsl(284 22% 80%);
+  --color-primary-content: hsl(284 4% 16%);
+  --color-secondary: hsl(352 70% 88%);
+  --color-secondary-content: hsl(352 7% 17%);
+  --color-accent: hsl(139 74% 73%);
+  --color-accent-content: hsl(136 19% 15%);
+  --color-neutral: hsl(0 0% 100%);
+  --color-neutral-content: hsl(146 0% 19%);
+  --color-info: #3abff8;
+  --color-info-content: #04222e;
+  --color-success: #36d399;
+  --color-success-content: #06271a;
+  --color-warning: #fbbd23;
+  --color-warning-content: #2c2204;
+  --color-error: #f87272;
+  --color-error-content: #3a0b0b;
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.5rem;
+  --radius-box: 1rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.3rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+/* Restore the daisyUI 4 dimensions used by the original design. */
+.card-body {
+  padding: 2rem;
+}
+
+.btn {
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.btn-sm {
+  height: 2rem;
+  min-height: 2rem;
+}
+
+.btn-square.btn-sm {
+  width: 2rem;
+}
+
+.badge {
+  border-radius: 1.9rem;
+}
+
+.login-label {
+  padding: 0.5rem 0.25rem;
+  line-height: 1.25rem;
+}
+
+.login-label .label-text {
+  line-height: 1.25rem;
+}
+
+.login-input {
+  height: 3rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  padding: 0 1rem;
+  border-color: transparent;
+}
+
+.login-input:focus {
+  border-color: transparent;
+}
+
+.login-name-fields .join-item {
+  border: 0;
+}
+
+.login-name-fields .join-item:first-child .login-input {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.login-name-fields .join-item:last-child .login-input {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.tab-menu li > a {
+  min-height: 2.5rem;
+  padding: 0.5rem 1rem;
+  line-height: 1.25rem;
+  border-radius: 0.5rem;
+}
+
+.rsvp-select,
+.rsvp-input {
+  height: 3rem;
+  min-height: 3rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.rsvp-select {
+  appearance: none;
+  font-weight: 600;
+  padding: 0 2rem 0 1rem;
+}
+
+.rsvp-select option {
+  font-weight: 400;
+}
+
+.rsvp-input {
+  padding: 0 1rem;
+}
+
+.rsvp-others-label {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 0.5rem 0.25rem;
+}
+
+@media (min-width: 785px) {
+  .rsvp-select,
+  .rsvp-input {
+    height: 4rem;
+    min-height: 4rem;
+    font-size: 1.125rem;
+    line-height: 2.25rem;
+  }
+
+  .rsvp-select {
+    padding: 0 2rem 0 1.5rem;
+  }
+
+  .rsvp-input {
+    padding: 0 1.5rem;
+  }
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}

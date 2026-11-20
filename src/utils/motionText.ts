@@ -1,4 +1,6 @@
-export const dashboardText = {
+import type { Variants } from 'motion/react'
+
+export const dashboardText: Variants = {
   hidden: { opacity: 1 },
   visible: {
     opacity: 1,
@@ -8,7 +10,8 @@ export const dashboardText = {
     },
   },
 }
-export const loginText = {
+
+export const loginText: Variants = {
   hidden: { opacity: 1 },
   visible: {
     opacity: 1,
@@ -18,7 +21,8 @@ export const loginText = {
     },
   },
 }
-export const letter = {
+
+export const letter: Variants = {
   hidden: { opacity: 0, y: 50 },
   visible: {
     opacity: 1,
